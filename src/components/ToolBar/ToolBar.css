@@ -1,0 +1,53 @@
+.toolbar {
+    width: 100%;
+    height: var(--toolbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+    border-bottom: var(--border-size) var(--border-color);
+    -webkit-app-region: drag;
+}
+
+.toolbarBrand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-left: 10px;
+}
+
+.logo {
+    max-width: 15px;
+}
+
+.titleLogo {
+    font-size: var(--fs-h5);
+    font-weight: var(--fw-bold);
+}
+
+.roleName {
+    font-size: var(--fs-h6);
+    font-weight: var(--fw-semibold);
+}
+
+.windowBtns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-app-region: no-drag;
+}
+
+.btn {
+    width: 35px;
+    height: 35px;
+    background: var(--bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
+    border-bottom: var(--border-size) var(--border-color);
+}
+
+.btn:hover {
+    background: var(--bg-hover);
+}

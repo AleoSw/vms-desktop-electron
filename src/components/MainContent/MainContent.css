@@ -1,0 +1,18 @@
+.cameras {
+    width: 100%;
+    height: calc(100svh - var(--toolbar-height));
+    padding: 10px;
+    overflow-y: auto; /* Añadido para habilitar el desplazamiento vertical si es necesario */
+}
+
+.cam-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media screen and (min-width: 1440px) {
+    .cameras {
+        width: calc(100% - var(--aside-width));
+        margin-left: auto;
+    }
+}

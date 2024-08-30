@@ -1,0 +1,2 @@
+*.deb filter=lfs diff=lfs merge=lfs -text
+dist_electron/linux-unpacked/* filter=lfs diff=lfs merge=lfs -text

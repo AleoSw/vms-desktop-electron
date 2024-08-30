@@ -1,0 +1,32 @@
+.cam {
+  flex: 1 1 calc(100% - 2px);
+  max-width: calc(100% - 2px);
+  border: var(--border-size) var(--border-color);
+}
+
+.cam > img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (min-width: 600px) {
+  .cam {
+    flex: 1 1 calc(50% - 2px); /* Dos cámaras por fila en pantallas medianas */
+    max-width: calc(50% - 2px);
+  }
+}
+
+@media (min-width: 900px) {
+  .cam {
+    flex: 1 1 calc(33.33% - 2px); /* Tres cámaras por fila en pantallas más grandes */
+    max-width: calc(33.33% - 2px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .cam {
+    flex: 1 1 calc(25% - 2px); /* Cuatro cámaras por fila en pantallas muy grandes */
+    max-width: calc(25% - 2px);
+  }
+}
