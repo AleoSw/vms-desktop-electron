@@ -7,7 +7,7 @@ function MainContent() {
     <section className="cameras" id="cameras">
       <section className="cam-container">
         <Cam url={"#"} />
-        <Cam url={"http://10.211.144.130:4747/video"} />
+        <Cam url={"http://192.168.1.16:4747/video"} />
         <Cam url={"#"} />
         <Cam url={"#"} />
         <Cam url={"#"} />
