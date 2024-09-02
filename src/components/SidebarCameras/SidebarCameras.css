@@ -7,7 +7,7 @@
   justify-content: start;
   flex-direction: column;
   width: var(--aside-width);
-  height: calc(100% - var(--toolbar-height));
+  height: 100%;
   border-right: var(--border-size) var(--border-color);
   background: var(--bg);
   z-index: 50;
