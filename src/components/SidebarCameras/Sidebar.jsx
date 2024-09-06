@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Sidebar.css";
+import "./SidebarCameras.css";
 import Dropdown from "../Dropdown/Dropdown";
 
 function Sidebar() {
@@ -32,21 +32,6 @@ function Sidebar() {
 
       <section className="sectores">
         <section className="menu" id="menuSidebar">
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
           <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
           <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
           <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />

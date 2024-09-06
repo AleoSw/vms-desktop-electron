@@ -39,12 +39,8 @@
   gap: 10px;
 }
 
-.d-block {
-  display: block !important;
-}
-
 .headerSidebar .title h3 {
-  font-size: var(--fs-s-h6);
+  font-size: var(--fs-h6);
   font-weight: var(--fw-medium);
   color: var(--text-primary);
 }
@@ -86,7 +82,7 @@
   border-bottom: none;
 }
 .sectores .menu .item .item-header h3 {
-  font-size: var(--fs-s-h5);
+  font-size: var(--fs-h5);
 }
 
 .arrowToggle {

@@ -1,6 +1,6 @@
 import React from "react";
 import MainContent from "../MainContent/MainContent";
-import Sidebar from "../Sidebar/Sidebar";
+import Sidebar from "../SidebarCameras/Sidebar";
 import Toolbar from "../ToolBar/ToolBar";
 
 function Main({ onLogout }) {

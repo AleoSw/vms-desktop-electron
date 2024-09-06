@@ -22,6 +22,8 @@ const Toolbar = ({ onLogout }) => {
     setShowComponent(!showComponent);
   };
 
+  const path = window.location.pathname;
+
   return (
     <header className="toolbar">
       <section className="brandMenu">
@@ -31,7 +33,17 @@ const Toolbar = ({ onLogout }) => {
             src={logoSena}
             alt="Servicio Nacional de Aprendizaje"
           />
-          <h3 className="titleLogo">VMS CDTI</h3>
+
+          {path === "/" ? (
+            <h3 className="titleLogo">VMS CDTI</h3>
+          ) : null}
+
+          {path === "/settings" ? (
+            <a href="/" className="btn">
+              <i className="ri-arrow-left-line"></i>
+            </a>
+          ) : null}
+
         </section>
 
         <button className="btn" onClick={handleClick}>

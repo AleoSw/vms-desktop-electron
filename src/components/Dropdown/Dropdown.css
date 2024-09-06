@@ -39,6 +39,8 @@
     padding: 5px;
     padding-left: 15px;
     transition: var(--transition);
+    font-size: var(--fs-h6);
+    font-weight: var(--fw-medium);
     cursor: pointer;
 }
 

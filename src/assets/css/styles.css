@@ -47,12 +47,12 @@
   :root {
     /*fonts*/
     --text-primary: #fff;
-    --fs-s-h1: 28px;
-    --fs-s-h2: 24px;
-    --fs-s-h3: 20px;
-    --fs-s-h4: 16px;
-    --fs-s-h5: 14px;
-    --fs-s-h6: 12px;
+    --fs-h1: 28px;
+    --fs-h2: 24px;
+    --fs-h3: 20px;
+    --fs-h4: 16px;
+    --fs-h5: 14px;
+    --fs-h6: 12px;
   }
 }
 
@@ -60,12 +60,12 @@
   :root {
     /*fonts*/
     --text-primary: #fff;
-    --fs-s-h1: 30px;
-    --fs-s-h2: 26px;
-    --fs-s-h3: 22px;
-    --fs-s-h4: 18px;
-    --fs-s-h5: 16px;
-    --fs-s-h6: 14px;
+    --fs-h1: 30px;
+    --fs-h2: 26px;
+    --fs-h3: 22px;
+    --fs-h4: 18px;
+    --fs-h5: 16px;
+    --fs-h6: 14px;
   }
 }
 
@@ -222,7 +222,7 @@ ol {
 }
 
 .main-login form header h1 {
-  font-size: var(--fs-s-h3);
+  font-size: var(--fs-h3);
 }
 
 .form-group {
@@ -242,7 +242,7 @@ ol {
 }
 
 .form-group label h3 {
-  font-size: var(--fs-s-h5);
+  font-size: var(--fs-h5);
   font-weight: var(--fw-semibold);
 }
 
@@ -255,7 +255,7 @@ ol {
   font-family: "Work Sans", sans-serif;
   color: var(--text-primary);
   caret-color: var(--color-secondary);
-  font-size: var(--fs-s-h6);
+  font-size: var(--fs-h6);
   font-weight: var(--fw-regular);
 }
 
@@ -263,7 +263,7 @@ ol {
   width: 100%;
   padding: 15px;
   border-radius: 5px;
-  font-size: var(--fs-s-h5);
+  font-size: var(--fs-h5);
   font-weight: var(--fw-semibold);
   color: var(--text-primary);
   background: var(--color-primary);

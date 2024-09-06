@@ -47,6 +47,9 @@
 }
 
 .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 35px;
     height: 35px;
     background: var(--bg);
@@ -60,3 +63,4 @@
 .btn:hover {
     background: var(--bg-hover);
 }
+
