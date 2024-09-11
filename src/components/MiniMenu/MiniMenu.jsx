@@ -19,11 +19,11 @@ function MiniMenu({ onLogout }) {
   return (
     <section className="miniMenu">
       <article className="optionMiniMenu" onClick={handleSettings}>
-        <i class="ri-settings-3-line"></i>
+        <i className="ri-settings-3-line"></i>
         <h3 className="textOption">Configuración</h3>
       </article>
       <article className="optionMiniMenu" onClick={handleLogout}>
-        <i class="ri-logout-circle-line"></i>
+        <i className="ri-logout-circle-line"></i>
         <h3 className="textOption">Cerrar sesión</h3>
       </article>
     </section>

@@ -47,7 +47,7 @@ const Toolbar = ({ onLogout }) => {
         </section>
 
         <button className="btn" onClick={handleClick}>
-          <i class="ri-menu-line"></i>
+          <i className="ri-menu-line"></i>
         </button>
       </section>
 
@@ -55,13 +55,13 @@ const Toolbar = ({ onLogout }) => {
 
       <section className="windowBtns">
         <button className="btn" onClick={handleMinimize}>
-          <i class="ri-subtract-line"></i>
+          <i className="ri-subtract-line"></i>
         </button>
         <button className="btn" onClick={handleMaximize}>
-          <i class="ri-square-line"></i>
+          <i className="ri-square-line"></i>
         </button>
         <button className="btn" onClick={handleClose}>
-          <i class="ri-close-line"></i>
+          <i className="ri-close-line"></i>
         </button>
       </section>
 

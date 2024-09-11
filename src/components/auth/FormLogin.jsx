@@ -12,7 +12,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:4001/auth/login", {
+      const response = await fetch("http://10.211.128.22/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

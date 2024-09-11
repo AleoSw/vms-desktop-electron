@@ -1,8 +1,9 @@
 const path = require('path');
-const { app, BrowserWindow, ipcMain } = require('electron');
- 
-const isDev = process.env.IS_DEV == "true" ? true : false;
- 
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const { fork } = require('child_process');
+
+const isDev = process.env.IS_DEV === "true";
+
 let mainWindow;
 
 function createWindow() {
@@ -16,32 +17,39 @@ function createWindow() {
       contextIsolation: false
     },
   });
- 
+
   mainWindow.webContents.setWindowOpenHandler((edata) => {
     shell.openExternal(edata.url);
     return { action: "deny" };
   });
- 
+
   mainWindow.loadURL(
     isDev
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../dist/index.html')}`
   );
-  // Open the DevTools.
+
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
- 
 }
- 
- 
+
 app.whenReady().then(() => {
-  createWindow()
+  // Crear la ventana de Electron
+  createWindow();
+
+  // Iniciar el servidor proxy de Express en un proceso separado
+  const proxyServer = fork(path.join(__dirname, 'proxy.js'));
+
+  proxyServer.on('error', (err) => {
+    console.error('Error starting the proxy server:', err);
+  });
+
   app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 });
- 
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();

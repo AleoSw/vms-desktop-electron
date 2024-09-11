@@ -17,7 +17,12 @@
   },
   "dependencies": {
     "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
+    "digest-fetch": "^2.0.3",
+    "express": "^4.19.2",
+    "http-proxy-middleware": "^3.0.2",
+    "node-fetch": "^2.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
@@ -54,6 +59,10 @@
       "maintainer": "Tu Nombre <tuemail@example.com>"
     },
     "win": {
+      "signAndEditExecutable": false,
+      "certificateFile": null,
+      "certificateSubjectName": null,
+      "sign": false,
       "target": [
         "nsis"
       ]
