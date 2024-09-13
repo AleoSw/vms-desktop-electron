@@ -7,10 +7,10 @@ import {
   Navigate,
 } from "react-router-dom";
 import Login from "./components/auth/Login";
-import Main from "./components/Main/Main";
+import MainCameras from "./components/MainView/MainCameras/MainCameras";
 import { getCookie } from "./utils/cookieUtils";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import Settings from "./components/Settings/Settings";
+import Settings from "./components/SettingsView/Settings/Settings";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -37,7 +37,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route  path="/" element={<ProtectedRoute element={<Main onLogout={handleLogout} />} />}/>
+        <Route  path="/" element={<ProtectedRoute element={<MainCameras onLogout={handleLogout} />} />}/>
         <Route  path="/settings" element={<ProtectedRoute element={<Settings onLogout={handleLogout} />} />}/>
       </Routes>
     </Router>

@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "main": "electron/electron.js",
-  "author": "Tu Nombre <tuemail@example.com>",
-  "description": "Descripción de tu aplicación",
+  "author": "Aleodv <devaleo@gmail.com>",
+  "description": "Video System Management",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,7 +13,8 @@
     "electron:pack": "electron-builder --dir",
     "electron:dev": "concurrently -k \"cross-env BROWSER=none npm run dev\" \"npm run electron\"",
     "electron:builder": "electron-builder",
-    "app:build": "npm run build && npm run electron:builder"
+    "app:build": "npm run build && npm run electron:builder",
+    "dist:dev": "npm run build && electron ."
   },
   "dependencies": {
     "concurrently": "^8.2.2",
@@ -41,38 +42,32 @@
     "vite": "^5.4.1"
   },
   "build": {
-    "appId": "com.devname.package",
-    "productName": "Project Name",
-    "copyright": "Copyright © 2023 Tu Nombre",
+    "appId": "com.vmscdti.electron",
+    "productName": "VMS CDTI",
+    "directories": {
+      "output": "dist_electron"
+    },
     "files": [
       "dist/**/*",
-      "electron/**/*"
+      "electron/**/*",
+      "package.json"
     ],
-    "mac": {
-      "category": "public.app-category.utilities"
+    "win": {
+      "target": "nsis",      
+      "icon": "build/icon.png"
     },
     "linux": {
       "target": [
-        "deb"
+        "deb",              
+        "AppImage"
       ],
       "category": "Utility",
-      "maintainer": "Tu Nombre <tuemail@example.com>"
+      "icon": "build/icon.png"
     },
-    "win": {
-      "signAndEditExecutable": false,
-      "certificateFile": null,
-      "certificateSubjectName": null,
-      "sign": false,
-      "target": [
-        "nsis"
-      ]
-    },
-    "directories": {
-      "buildResources": "assets",
-      "output": "dist_electron"
-    },
-    "extraMetadata": {
-      "homepage": "http://example.com"
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
     }
-  }
+  }    
 }

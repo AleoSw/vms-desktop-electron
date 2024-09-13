@@ -1,6 +1,6 @@
-const path = require('path');
-const { app, BrowserWindow, ipcMain, shell } = require('electron');
-const { fork } = require('child_process');
+const path = require("path");
+const { app, BrowserWindow, ipcMain, shell } = require("electron");
+const { fork } = require("child_process");
 
 const isDev = process.env.IS_DEV === "true";
 
@@ -12,9 +12,9 @@ function createWindow() {
     height: 650,
     frame: false,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
     },
   });
 
@@ -23,14 +23,11 @@ function createWindow() {
     return { action: "deny" };
   });
 
-  mainWindow.loadURL(
-    isDev
-      ? 'http://localhost:3000'
-      : `file://${path.join(__dirname, '../dist/index.html')}`
-  );
-
   if (isDev) {
+    mainWindow.loadURL("http://localhost:3000");
     mainWindow.webContents.openDevTools();
+  } else {
+    mainWindow.loadURL("http://localhost:3002");
   }
 }
 
@@ -39,28 +36,37 @@ app.whenReady().then(() => {
   createWindow();
 
   // Iniciar el servidor proxy de Express en un proceso separado
-  const proxyServer = fork(path.join(__dirname, 'proxy.js'));
+  const proxyServer = fork(path.join(__dirname, "proxy.js"));
 
-  proxyServer.on('error', (err) => {
-    console.error('Error starting the proxy server:', err);
+  proxyServer.on("error", (err) => {
+    console.error("Error starting the proxy server:", err);
   });
 
-  app.on('activate', function () {
+  
+  if (!isDev) {
+    const serverReact = fork(path.join(__dirname, "server.js"));
+  
+    serverReact.on("error", (err) => {
+      console.error("Error starting the dist server:", err);
+    });
+  }
+
+  app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
     app.quit();
   }
 });
 
-ipcMain.on('minimize-window', () => {
+ipcMain.on("minimize-window", () => {
   mainWindow.minimize();
 });
 
-ipcMain.on('maximize-window', () => {
+ipcMain.on("maximize-window", () => {
   if (mainWindow.isMaximized()) {
     mainWindow.unmaximize();
   } else {
@@ -68,6 +74,6 @@ ipcMain.on('maximize-window', () => {
   }
 });
 
-ipcMain.on('close-window', () => {
+ipcMain.on("close-window", () => {
   mainWindow.close();
 });

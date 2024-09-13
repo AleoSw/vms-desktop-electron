@@ -7,7 +7,7 @@ const CameraStream = ({ videoUrl}) => {
 
   return (
     <div className='cam'>
-      <img src={videoUrl} controls autoPlay type="multipart/x-mixed-replace; boundary=--myboundary" />
+      <img src={videoUrl} autoPlay />
     </div>
   );
 };

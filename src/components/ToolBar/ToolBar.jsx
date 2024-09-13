@@ -34,24 +34,27 @@ const Toolbar = ({ onLogout }) => {
             alt="Servicio Nacional de Aprendizaje"
           />
 
-          {path === "/" ? (
+          {path != "/settings" ? (
             <h3 className="titleLogo">VMS CDTI</h3>
           ) : null}
 
-          {path === "/settings" ? (
-            <a href="/" className="btn">
-              <i className="ri-arrow-left-line"></i>
-            </a>
-          ) : null}
+          {path != "/settings" ? (
+            null
+          ) : <a href="/" className="btn">
+          <i className="ri-arrow-left-line"></i>
+        </a>}
 
         </section>
 
-        <button className="btn" onClick={handleClick}>
+        {path != "/login" ? (
+          <button className="btn" onClick={handleClick}>
           <i className="ri-menu-line"></i>
         </button>
+        ) : null}
       </section>
 
-      <span className="rolName">Administrador</span>
+      
+        {path === "/login" ? null : (<span className="rolName">Administrador</span>)}
 
       <section className="windowBtns">
         <button className="btn" onClick={handleMinimize}>
