@@ -1,18 +1,23 @@
 // AnotherComponent.jsx
 import React from 'react';
-import { useOption } from '../../OptionContext/OptionContext'; // Importa el hook del contexto
 
-function MainSettings() {
-    const { selectedOption } = useOption(); // Usa el hook para acceder a la opción seleccionada
-     const modulo = selectedOption[0];
-     const opcion = selectedOption[1];
-    
+import AddCamera from '../AddCamera/AddCamera';
+import "./MainSettings.css"
+
+const componentMap = {
+    'Camaras-Agregar': AddCamera,
+    'Camaras-Listar camaras': "",
+    'Usuarios-Agregar': "",
+    'Usuarios-Listar usuarios': ""
+}
+
+function MainSettings({ selectedAction }) {
+    const ComponentToRender = componentMap[selectedAction] || (() => <div>Selecciona una acción</div>)
+
     return (
-        <div>
-            <h2>Opción Seleccionada:</h2>
-            <p>{modulo}</p>
-            <p>{opcion}</p>
-        </div>
+        <section className='contentSettings'>
+            <ComponentToRender />
+        </section>
     );
 }
 

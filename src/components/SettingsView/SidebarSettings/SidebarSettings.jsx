@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./SidebarSettings.css";
-import MenuSettings from "../MenuSettings/MenuSettings";
 
-function SidebarSettings() {
+function SidebarSettings({ modules, onActionSelect, selectedAction }) {
   const [toolbarOn, setToolbarOn] = useState("");
   const [arrowRotate, setArrowRotate] = useState("");
 
@@ -22,7 +21,26 @@ function SidebarSettings() {
       </header>
 
       <section className="menuSettings">
-        <MenuSettings />
+        <section className="menu">
+          {modules.map((module) => (
+            <article key={module.name} className="module">
+              <header className="headerModule">
+                <h3 className="title">{module.name}</h3>
+              </header>
+              <ul className="actions">
+                {module.actions.map((action) => {
+                  const actionId = `${module.name}-${action}`;
+
+                  return (
+                    <li key={actionId} className={actionId === selectedAction ? 'item on' : 'item'} onClick={() => onActionSelect(actionId)}>
+                      {action}
+                    </li>
+                  );
+                })}
+              </ul>
+            </article>
+          ))}
+        </section>
       </section>
 
       <button className="arrowToggleSettings" onClick={toggleClass}>

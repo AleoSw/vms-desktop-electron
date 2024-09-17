@@ -85,6 +85,51 @@
     flex-direction: column;
 }
 
+.menu .module {
+    width: 100%;
+}
+
+.menu .module .headerModule {
+    width: 100%;
+    background: var(--bg-hover);
+    padding: 10px;
+    border-bottom: var(--border-size) var(--border-color);
+    border-top: var(--border-size) var(--border-color);
+}
+
+.headerModule .title {
+    font-size: var(--fs-h5);
+    font-weight: var(--fw-medium);
+}
+
+.actions {
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.actions .item {
+    width: 100%;
+    padding: 5px;
+    padding-left: 20px;
+    font-size: var(--fs-h6);
+    font-weight: var(--fw-regular);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.item.on {
+    background: var(--bg-hover);
+}
+
+.actions .item:hover {
+    background: var(--bg-hover);
+}
+
+
+
 @media screen and (min-width: 767px) {
     .sidebarSettings {
         left: 0;

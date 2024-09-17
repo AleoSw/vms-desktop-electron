@@ -1,0 +1,52 @@
+.addCamera {
+    width: 100%;
+    overflow-y: scroll;
+    margin: auto 0;
+    padding-left: 15px;
+}
+
+.formAddCamera {
+    width: 100%;
+    max-width: 1024px;
+    height: auto;
+    margin: 0 auto;
+    padding-block: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btnAddCam {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: var(--fs-h5);
+    font-weight: var(--fw-semibold);
+    color: var(--text-primary);
+    background: var(--color-primary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.form-group select{
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    background: var(--bg);
+    border: var(--border-size) var(--border-color);
+    color: var(--text-primary);
+}
+
+@media screen and (min-width: 767px) {
+    .formAddCamera {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .btnAddCam {
+        grid-column: span 2;
+    }
+}
+

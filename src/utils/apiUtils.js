@@ -1,13 +1,15 @@
 // src/utils/apiUtils.js
+import { getCookie } from "./cookieUtils";
+
 export const fetchWithAuth = async (url, options) => {
     const token = getCookie('authToken'); // Obtén el token desde la cookie o almacenamiento
-  
+
     try {
       const response = await fetch(url, {
         ...options,
         headers: {
           ...options.headers,
-          'Authorization': `Bearer ${token}`,
+          'Authorization': token
         },
       });
   
