@@ -18,8 +18,13 @@
   --color-primary: #39a900;
   --c-hover-primary: #277300;
   --color-secondary: #82def0;
+  --color-danger: red;
+  --c-hover-danger: rgb(178, 0, 0);
   --border-size: 1px solid;
   --border-color: #2c4f55;
+
+  --status-cam-on: #39a900;
+  --status-cam-off: red;
 
   /*fonts*/
   --text-primary: #fff;

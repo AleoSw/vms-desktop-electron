@@ -37,6 +37,51 @@
     background: var(--bg);
     border: var(--border-size) var(--border-color);
     color: var(--text-primary);
+    font-size: var(--fs-h6);
+    font-weight: var(--fw-regular);
+}
+
+.validateIp {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.validateIp button {
+    padding: 10px;
+    background: var(--color-primary);
+    font-size: var(--fs-h6);
+    font-weight: var(--fw-semibold);
+    color: var(--text-primary);
+    border-radius: 5px;
+}
+
+.statusCam {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    border: var(--border-size) var(--border-color);
+    border-radius: 5px;
+}
+
+.statusCam .status {
+    width: 20px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.statusCam .status.on {
+    background: var(--status-cam-on);
+}
+.statusCam .status.off {
+    background: var(--status-cam-off);
+}
+
+.statusCam .statusText {
+    font-size: var(--fs-h6);
+    font-weight: var(--fw-regular);
 }
 
 @media screen and (min-width: 767px) {

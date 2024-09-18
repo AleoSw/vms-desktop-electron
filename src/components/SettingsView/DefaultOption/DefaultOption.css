@@ -1,0 +1,22 @@
+.mainImage {
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.defaultImage {
+    width: 40%;
+    height: auto;
+}
+
+.titleImage {
+    font-size: var(--fs-h4);
+    font-weight: var(--fw-bold);
+    color: var(--color-secondary);
+}

@@ -1,6 +1,7 @@
 const path = require("path");
 const { app, BrowserWindow, ipcMain, shell } = require("electron");
 const { fork } = require("child_process");
+require('dotenv').config();
 
 const isDev = process.env.IS_DEV === "true";
 

@@ -1,0 +1,83 @@
+.listCameras {
+    position: relative;
+    width: 100%;
+    overflow-y: scroll;
+    margin: auto 0;
+    padding-left: 15px;
+    padding-block: 10px;
+}
+
+.listCameras .tableContent {
+    width: 100%;
+    max-width: 1024px;
+    height: auto;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.tableContent .table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: var(--border-size) var(--border-color);
+}
+
+th {
+    padding: 5px 10px;
+    text-align: left;
+    border-bottom: var(--border-size) var(--border-color);
+    font-size: var(--fs-h5);
+    font-weight: var(--fw-semibold);
+    color: var(--color-secondary);
+}
+
+td {
+    padding: 5px 10px;
+    text-align: left;
+    border-bottom: var(--border-size) var(--border-color);
+    font-size: var(--fs-h6);
+    font-weight: var(--fw-regular);
+    color: var(--text-primary);
+}
+
+.lastTd {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btnTable {
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btnTable.edit {
+    background: var(--color-primary);
+    color: var(--text-primary);
+}
+
+.btnTable.edit:hover {
+    background: var(--c-hover-primary);
+}
+
+.btnTable.delete {
+    background: var(--color-danger);
+    color: var(--text-primary);
+}
+
+.btnTable.delete:hover {
+    background: var(--c-hover-danger);
+}
+
+.btnTable i {
+    font-size: 16px;
+}
+
