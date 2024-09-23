@@ -33,16 +33,16 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  // Crear la ventana de Electron
-  createWindow();
-
+  
   // Iniciar el servidor proxy de Express en un proceso separado
   const proxyServer = fork(path.join(__dirname, "proxy.js"));
-
+  
   proxyServer.on("error", (err) => {
     console.error("Error starting the proxy server:", err);
   });
-
+  
+  // Crear la ventana de Electron
+  createWindow();
   
   if (!isDev) {
     const serverReact = fork(path.join(__dirname, "server.js"));

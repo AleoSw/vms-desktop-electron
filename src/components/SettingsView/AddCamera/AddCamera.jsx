@@ -39,7 +39,7 @@ function AddCamera() {
     setCameraIP(e.target.value);
   };
 
-  const [formData, setFromData] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     ip: "",
     user_cam: "",
@@ -48,7 +48,7 @@ function AddCamera() {
   });
 
   const handleChange = (e) => {
-    setFromData({
+    setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
@@ -76,7 +76,7 @@ function AddCamera() {
           setSectors(data.sectors);
 
           if (data.sectors.length > 0) {
-            setFromData((prevFormData) => ({
+            setFormData((prevFormData) => ({
               ...prevFormData,
               sector_name: data.sectors[0].name,
             }));
@@ -93,7 +93,7 @@ function AddCamera() {
   }, []);
 
   const cleanData = () => {
-    setFromData({
+    setFormData({
       name: "",
       ip: "",
       user_cam: "",

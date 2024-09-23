@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SidebarCameras.css";
 import Dropdown from "../Dropdown/Dropdown";
+import { fetchWithAuth } from "../../../utils/apiUtils";
 
 function Sidebar() {
   const [toolbarOn, setToolbarOn] = useState("");
@@ -11,14 +12,60 @@ function Sidebar() {
     setArrowRotate((prevClass) => (prevClass === "" ? "rotateArrow" : ""));
   };
 
-  // Lista de opciones para el Dropdown
-  const sectores = ["Ambiente 1", "Ambiente 2", "Ambiente 3"];
-
   // Manejar la selección de una opción del Dropdown
   const handleSelect = (option) => {
     console.log(`Has seleccionado: ${option}`);
     // Aquí puedes manejar lo que sucede cuando se selecciona una opción
   };
+
+  const [sectors, setSectors] = useState([]);
+  const [sectorsCameras, setSectorsCameras] = useState([]);
+
+  useEffect(() => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const loadSectors = async () => {
+      try {
+        const response = await fetchWithAuth(
+          `http://${process.env.DB_IP}/s/sector/all`,
+          requestOptions
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setSectors(data.sectors);
+        } else {
+          console.error("Error al cargar los sectores:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error en la solicitud de sectores:", error);
+      }
+    };
+
+    loadSectors();
+
+    const loadCamBySector = async () => {
+      try {
+        const response = await fetchWithAuth(
+          `http://${process.env.DB_IP}/s/sector/cameras`, requestOptions
+        )
+
+        if (response.ok) {
+          const data = await response.json();
+          setSectorsCameras(data.sectorsCameras)
+        }
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
+
+    loadCamBySector();
+  }, []);
 
   return (
     <aside className={`sidebar ${toolbarOn}`}>
@@ -32,12 +79,13 @@ function Sidebar() {
 
       <section className="sectores">
         <section className="menu" id="menuSidebar">
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
-          <Dropdown name={"BLOQUE A"} options={sectores} onSelect={handleSelect} />
+          {sectors.map((sector) => (
+            <Dropdown
+              key={sector.id}
+              name={sector.name}
+              onSelect={handleSelect}
+            />
+          ))}
         </section>
       </section>
 

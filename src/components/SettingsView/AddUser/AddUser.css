@@ -1,0 +1,35 @@
+.addUser {
+    width: 100%;
+    overflow-y: scroll;
+    margin: auto 0;
+    padding-left: 15px;
+}
+
+.formAddUser {
+    width: 100%;
+    max-width: 1024px;
+    height: auto;
+    margin: 0 auto;
+    padding-block: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btnAddUser {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: var(--fs-h5);
+    font-weight: var(--fw-semibold);
+    color: var(--text-primary);
+    background: var(--color-primary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btnAddUser:hover {
+    background: var(--c-hover-primary);
+}

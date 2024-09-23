@@ -89,7 +89,7 @@ function ListCamera() {
                 <th>IP</th>
                 <th>Usuario</th>
                 <th>Contraseña</th>
-                <th>Estado</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
