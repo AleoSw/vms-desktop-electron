@@ -37,8 +37,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route  path="/" element={<ProtectedRoute element={<MainCameras onLogout={handleLogout} />} />}/>
-        <Route  path="/settings" element={<ProtectedRoute element={<Settings onLogout={handleLogout} />} />}/>
+        <Route path="/" element={<ProtectedRoute element={<MainCameras onLogout={handleLogout} />} />} />
+        <Route path="/settings" element={<ProtectedRoute element={<Settings onLogout={handleLogout} />} />} />
       </Routes>
     </Router>
   );

@@ -1,30 +1,28 @@
 // src/components/auth/Login.js
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../utils/cookieUtils"; // Importar la función para establecer cookies
 
 const Login = ({ onLogin }) => {
-  const [document, setDocument] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
     try {
       const response = await fetch(`http://${process.env.DB_IP}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ document, password }),
+        body: JSON.stringify(data),
       });
 
       if (response.ok) {
-        const data = await response.json();
-        setCookie("authToken", data.token, 1); // Establecer el token en una cookie con 1 día de expiración
+        const responseData = await response.json();
+        setCookie("authToken", responseData.token, 1); // Establecer el token en una cookie con 1 día de expiración
         onLogin(); // Actualizar el estado de autenticación
-        navigate("/"); // Redirigir al usuario a la ruta protegida
+        navigate("/"); // Redirigir al usuario a la ruta ponSubmitrotegida
       } else {
         // Manejar errores de inicio de sesión
         console.error("Login failed");
@@ -35,7 +33,7 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <header>
         <i className="icon ri-video-on-line"></i>
         <h1>Inicia Sesión</h1>
@@ -49,9 +47,9 @@ const Login = ({ onLogin }) => {
           type="text"
           id="document"
           placeholder="Ingresa un documento, Ej. 1234567890"
-          value={document}
-          onChange={(e) => setDocument(e.target.value)}
+          {...register("document", { required: "Este campo es requerido" })}
         />
+        {errors.document && <span className="error">{errors.document.message}</span>}
       </div>
       <div className="form-group">
         <label htmlFor="password">
@@ -62,9 +60,9 @@ const Login = ({ onLogin }) => {
           type="password"
           id="password"
           placeholder="Ingresa tu contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          {...register("password", { required: "Este campo es requerido" })}
         />
+        {errors.password && <span className="error">{errors.password.message}</span>}
       </div>
       <button type="submit">Ingresar</button>
     </form>

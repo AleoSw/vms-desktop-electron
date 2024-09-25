@@ -1,7 +1,28 @@
 .cam {
+  position: relative;
   flex: 1 1 calc(100% - 2px);
   max-width: calc(100% - 2px);
   border: var(--border-size) var(--border-color);
+}
+
+.cam:hover .reload-cam {
+  opacity: 1;
+}
+
+.reload-cam {
+  opacity: 0;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 5px;
+  background: var(--color-primary);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.reload-cam:hover {
+  background: var(--c-hover-primary);
 }
 
 .cam > img {
@@ -29,4 +50,36 @@
     flex: 1 1 calc(25% - 2px); /* Cuatro cámaras por fila en pantallas muy grandes */
     max-width: calc(25% - 2px);
   }
+}
+
+.error-cam {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.error-cam p {
+  font-size: var(--fs-h6);
+  font-weight: var(--fw-medium);
+  color: var(--text-primary);
+}
+
+.btnReloadCam {
+  background: var(--color-primary);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: var(--fs-h6);
+  font-weight: var(--fw-medium);
+  color: var(--text-primary);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.btnReloadCam:hover {
+  background: var(--c-hover-primary);
 }

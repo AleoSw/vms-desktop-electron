@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form"; // Importa useForm de react-hook-form
 import { fetchWithAuth } from "../../../utils/apiUtils.js"; // Importa tu función fetchWithAuth
 import "./AddCamera.css";
 
 function AddCamera() {
-  const [cameraIP, setCameraIP] = useState("");
+  const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [isCameraVerified, setIsCameraVerified] = useState(false); // Estado para verificar la cámara antes de permitir el envío
+
+  const cameraIP = watch("ip"); // Observa el valor del campo IP
 
   const checkCameraStatus = async () => {
     setLoading(true);
@@ -20,42 +23,20 @@ function AddCamera() {
       });
 
       if (res) {
-        console.log(res, "<-----");
-
         // Dado que la respuesta es opaca (por el modo no-cors), no podemos verificar el estado, pero asumimos que si no falla, está disponible
         setStatus("Cámara disponible");
         setIsCameraVerified(true); // Habilitar el submit si se ha verificado la cámara
       } else {
-        setStatus("Camara no conectada");
+        setStatus("Cámara no conectada");
       }
     } catch (error) {
-      setStatus("Camara no conectada");
+      setStatus("Cámara no conectada");
     }
 
     setLoading(false);
   };
 
-  const handleInputChange = (e) => {
-    setCameraIP(e.target.value);
-  };
-
-  const [formData, setFormData] = useState({
-    name: "",
-    ip: "",
-    user_cam: "",
-    password_cam: "",
-    sector_name: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const [sectors, setSectors] = useState([]);
-  const keysArr = Object.keys(formData);
 
   useEffect(() => {
     const loadSectors = async () => {
@@ -72,15 +53,8 @@ function AddCamera() {
           requestOptions
         );
         if (response.ok) {
-          const data = await response.json();
+          const data = await response.json();          
           setSectors(data.sectors);
-
-          if (data.sectors.length > 0) {
-            setFormData((prevFormData) => ({
-              ...prevFormData,
-              sector_name: data.sectors[0].name,
-            }));
-          }
         } else {
           console.error("Error al cargar los sectores:", response.statusText);
         }
@@ -92,26 +66,9 @@ function AddCamera() {
     loadSectors();
   }, []);
 
-  const cleanData = () => {
-    setFormData({
-      name: "",
-      ip: "",
-      user_cam: "",
-      password_cam: "",
-      sector_name: sectors.length > 0 ? sectors[0].name : "",
-    });
-    setCameraIP("");
-    setStatus("");
-    setLoading(false);
-    setIsCameraVerified(false);
-
-    for (let i = 0; i < keysArr.length; i++) {
-      document.querySelector(`input[name="${keysArr[i]}"]`).value = "";
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    console.log(watch());
+    return;
 
     if (!isCameraVerified) {
       console.log("Por favor, verifica la cámara antes de agregarla.");
@@ -123,7 +80,7 @@ function AddCamera() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData), // Convertir los datos del formulario a JSON
+      body: JSON.stringify(data), // Convertir los datos del formulario a JSON
     };
 
     try {
@@ -136,7 +93,7 @@ function AddCamera() {
         const result = await response.json();
         console.log("Cámara agregada con éxito:", result);
 
-        cleanData();
+        reset(); // Reinicia el formulario después de agregar la cámara
       } else {
         console.error("Error al agregar la cámara:", response);
       }
@@ -152,7 +109,7 @@ function AddCamera() {
         <h3 className="title">Agregar cámara de video</h3>
       </header>
       <section className="addCamera">
-        <form className="formAddCamera" onSubmit={handleSubmit}>
+        <form className="formAddCamera" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <label htmlFor="name">
               <i className="icon ri-camera-lens-line"></i>
@@ -162,9 +119,9 @@ function AddCamera() {
               type="text"
               name="name"
               placeholder="Ingresa un nombre, Ej. AMBIENTE A211"
-              value={formData.nameCamera}
-              onChange={handleChange}
+              {...register("name", { required: "El nombre de la cámara es requerido" })} // Registra el campo en react-hook-form
             />
+            {errors.name && <p className="error">{errors.name.message}</p>}
           </div>
           <div className="form-group">
             <label htmlFor="ip">
@@ -176,11 +133,7 @@ function AddCamera() {
                 type="text"
                 name="ip"
                 placeholder="Ingresa una IP, Ej. 192.167.1.34"
-                value={formData.ipCamera}
-                onChange={(e) => {
-                  handleChange(e);
-                  handleInputChange(e);
-                }}
+                {...register("ip", { required: "La ip debe ser validada" })} // Registra el campo en react-hook-form
               />
               <button
                 type="button"
@@ -191,6 +144,7 @@ function AddCamera() {
                 {loading ? "Verificando..." : "Verificar"}
               </button>
             </div>
+            {errors.ip && <p className="error">{errors.ip.message}</p>}
           </div>
           <div className="form-group">
             <label htmlFor="user_cam">
@@ -201,9 +155,9 @@ function AddCamera() {
               type="text"
               name="user_cam"
               placeholder="Ingresa el usuario de la cámara"
-              value={formData.userCamera}
-              onChange={handleChange}
+              {...register("user_cam", { required: "El usuario de la cámara es requerido" })} // Registra el campo en react-hook-form
             />
+            {errors.user_cam && <p className="error">{errors.user_cam.message}</p>}
           </div>
           <div className="form-group">
             <label htmlFor="password_cam">
@@ -214,9 +168,9 @@ function AddCamera() {
               type="password" // Cambié a "password" para ocultar la contraseña
               name="password_cam"
               placeholder="Ingresa la contraseña de la cámara"
-              value={formData.passwordCamera}
-              onChange={handleChange}
+              {...register("password_cam", { required: "La cotraseña de la cámara es requerida" })} // Registra el campo en react-hook-form
             />
+            {errors.password_cam && <p className="error">{errors.password_cam.message}</p>}
           </div>
           <div className="form-group">
             <label htmlFor="sector_name">
@@ -225,10 +179,9 @@ function AddCamera() {
             </label>
             <select
               name="sector_name"
-              value={formData.sector_name}
-              onChange={handleChange}
+              {...register("sector_name")} // Registra el campo en react-hook-form
             >
-              {sectors.map((sector, i) => (
+              {sectors.map((sector) => (
                 <option key={sector.name} value={sector.name}>
                   {sector.name}
                 </option>

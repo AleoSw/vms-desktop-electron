@@ -24,7 +24,7 @@ function Settings({ onLogout }) {
 
   return (
     <>
-      <Toolbar onLogout={onLogout} />
+      <Toolbar onLogout={onLogout}/>
       <main className="mainSettings">
         <SidebarSettings modules={modules} onActionSelect={handleActionSelect} selectedAction={selectedAction} />
         <MainSettings selectedAction={selectedAction} />

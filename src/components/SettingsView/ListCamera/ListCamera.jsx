@@ -100,19 +100,21 @@ function ListCamera() {
                     <td>{camera.ip}</td>
                     <td>{camera.user_cam}</td>
                     <td>{camera.password_cam}</td>
-                    <td className="lastTd">
-                      <button
-                        className="btnTable edit"
-                        onClick={() => handleEditCam(camera.name)}
-                      >
-                        <i className="ri-edit-line"></i>
-                      </button>
-                      <button
-                        className="btnTable delete"
-                        onClick={() => handleDeleteCam(camera.name)}
-                      >
-                        <i className="ri-delete-bin-line"></i>
-                      </button>
+                    <td>
+                      <div className="lastTd">
+                        <button
+                          className="btnTable edit"
+                          onClick={() => handleEditCam(camera.name)}
+                        >
+                          <i className="ri-edit-line"></i>
+                        </button>
+                        <button
+                          className="btnTable delete"
+                          onClick={() => handleDeleteCam(camera.name)}
+                        >
+                          <i className="ri-delete-bin-line"></i>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

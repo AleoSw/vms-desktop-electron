@@ -1,9 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ToolBar.css";
 import logoSena from "/public/images/logoSena.png";
 import MiniMenu from "../MiniMenu/MiniMenu";
+import { fetchWithAuth } from "../../utils/apiUtils"
+
 
 const Toolbar = ({ onLogout }) => {
+  const [userData, setUserData] = useState({});
+  const path = window.location.pathname;
+
+  /*useEffect(() => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+  
+    const loadUserData = async () => {
+      try {
+        const response = await fetchWithAuth(
+          `http://${process.env.DB_IP}/auth/user`,
+          requestOptions
+        )
+  
+        if (response.ok) {
+          const data = await response.json();
+          setUserData(data.user);
+        } else {
+          console.log("Error:", response.status);
+          
+        }
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    }
+
+    if (path != "/login") {
+      loadUserData();
+    }
+  }, [])*/
+
+
   const handleMinimize = () => {
     window.electronAPI.minimize(); // Llama a la función de minimizar
   };
@@ -22,7 +60,6 @@ const Toolbar = ({ onLogout }) => {
     setShowComponent(!showComponent);
   };
 
-  const path = window.location.pathname;
 
   return (
     <header className="toolbar">
@@ -41,20 +78,20 @@ const Toolbar = ({ onLogout }) => {
           {path != "/settings" ? (
             null
           ) : <a href="/" className="btn">
-          <i className="ri-arrow-left-line"></i>
-        </a>}
+            <i className="ri-arrow-left-line"></i>
+          </a>}
 
         </section>
 
         {path != "/login" ? (
           <button className="btn" onClick={handleClick}>
-          <i className="ri-menu-line"></i>
-        </button>
+            <i className="ri-menu-line"></i>
+          </button>
         ) : null}
       </section>
 
-      
-        {path === "/login" ? null : (<span className="rolName">Administrador</span>)}
+
+      {path === "/login" ? null : (<span className="rolName">{userData.rol_name}</span>)}
 
       <section className="windowBtns">
         <button className="btn" onClick={handleMinimize}>
