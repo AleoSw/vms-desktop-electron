@@ -6,20 +6,12 @@ import { fetchWithAuth } from "../../../utils/apiUtils";
 function Sidebar() {
   const [toolbarOn, setToolbarOn] = useState("");
   const [arrowRotate, setArrowRotate] = useState("");
+  const [groupedData, setGroupedData] = useState([]); // Datos agrupados por sector
 
   const toogleClass = () => {
     setToolbarOn((prevClass) => (prevClass === "" ? "active" : ""));
     setArrowRotate((prevClass) => (prevClass === "" ? "rotateArrow" : ""));
   };
-
-  // Manejar la selección de una opción del Dropdown
-  const handleSelect = (option) => {
-    console.log(`Has seleccionado: ${option}`);
-    // Aquí puedes manejar lo que sucede cuando se selecciona una opción
-  };
-
-  const [sectors, setSectors] = useState([]);
-  const [sectorsCameras, setSectorsCameras] = useState([]);
 
   useEffect(() => {
     const requestOptions = {
@@ -29,35 +21,38 @@ function Sidebar() {
       },
     };
 
-    const loadSectors = async () => {
+    const loadCamBySector = async () => {
       try {
         const response = await fetchWithAuth(
-          `http://${process.env.DB_IP}/s/sector/all`,
+          `http://${process.env.DB_IP}/s/sector/cameras`,
           requestOptions
         );
 
         if (response.ok) {
-          const data = await response.json();
-          setSectors(data.sectors);
-        } else {
-          console.error("Error al cargar los sectores:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error en la solicitud de sectores:", error);
-      }
-    };
+          const responseData = await response.json();
 
-    loadSectors();
+          // Agrupar por sector
+          const grouped = responseData.sectorsCameras.reduce((acc, curr) => {
+            const { sector_name, camera_name, camera_ip, user_cam, password_cam } = curr;
+            if (!acc[sector_name]) {
+              acc[sector_name] = [];
+            }
+            if (camera_name) {
+              acc[sector_name].push({camera_name, camera_ip, user_cam, password_cam}); // Añadir cámaras no nulas
+            }
+            return acc;
+          }, {});
 
-    const loadCamBySector = async () => {
-      try {
-        const response = await fetchWithAuth(
-          `http://${process.env.DB_IP}/s/sector/cameras`, requestOptions
-        )
+          console.log(grouped, "<------------------");
+          
 
-        if (response.ok) {
-          const data = await response.json();
-          setSectorsCameras(data.sectorsCameras)
+          // Convertir a un array de objetos para pasarlo a Dropdown
+          const formattedData = Object.keys(grouped).map((sector) => ({
+            sector,
+            cameras: grouped[sector],
+          }));
+
+          setGroupedData(formattedData); // Guardar los datos agrupados por sector
         }
       } catch (error) {
         console.log("Error:", error);
@@ -79,11 +74,12 @@ function Sidebar() {
 
       <section className="sectores">
         <section className="menu" id="menuSidebar">
-          {sectors.map((sector) => (
+          {groupedData.map((sectorData, index) => (
             <Dropdown
-              key={sector.id}
-              name={sector.name}
-              onSelect={handleSelect}
+              key={index}
+              name={sectorData.sector} // Nombre del sector
+              options={sectorData.cameras} // Cámaras del sector
+              onSelect={(camera) => console.log("Cámara seleccionada:", camera)}
             />
           ))}
         </section>

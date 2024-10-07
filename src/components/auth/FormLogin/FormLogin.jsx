@@ -2,7 +2,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { setCookie } from "../../utils/cookieUtils"; // Importar la función para establecer cookies
+import { setCookie } from "../../../utils/cookieUtils"; // Importar la función para establecer cookies
+import "./FormLogin.css"
 
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const Login = ({ onLogin }) => {
         />
         {errors.password && <span className="error">{errors.password.message}</span>}
       </div>
-      <button type="submit">Ingresar</button>
+      <button className="btnSubmit" type="submit">Ingresar</button>
     </form>
   );
 };

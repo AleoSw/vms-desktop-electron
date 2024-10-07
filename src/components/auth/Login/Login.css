@@ -1,0 +1,114 @@
+.main-login {
+  width: 100%;
+  height: calc(100vh - var(--toolbar-height));
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-login .content {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-rows: calc(100svh - var(--toolbar-height));
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "form form";
+  justify-content: center;
+  align-items: center;
+}
+
+.main-login .content::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: url("/public/images/logoSena-highlight.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.img-login {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+}
+
+.img-login picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.img-login picture img {
+  height: auto;
+  width: 100%;
+}
+
+@media screen and (min-width: 567px) {
+  .main-login form {
+    margin-inline: 100px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .main-login .content {
+    grid-template-areas: "img form";
+  }
+
+  .main-login .content::before {
+    content: initial;
+  }
+
+  .img-login {
+    position: relative;
+    display: flex;
+    grid-area: img;
+  }
+
+  .img-login::before {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    content: "";
+    width: 50%;
+    height: 70%;
+    min-height: 420px;
+    max-height: 1000px;
+    background: var(--bg-white);
+    opacity: 0.1;
+    border-top-right-radius: 100% 50%;
+    border-bottom-right-radius: 100% 50%;
+    z-index: 5;
+  }
+
+  .img-login picture img {
+    width: 70%;
+    z-index: 10;
+  }
+
+  .main-login form {
+    margin-inline: 25px;
+  }
+}
+
+@media screen and (min-width: 1366px) {
+  .main-login {
+    width: 1024px;
+    margin: 0 auto;
+  }
+
+  .img-login::before {
+    border-top-left-radius: 100% 50%;
+    border-bottom-left-radius: 100% 50%;
+  }
+}

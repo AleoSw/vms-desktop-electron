@@ -70,6 +70,10 @@
 }
 
 .btnReloadCam {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   background: var(--color-primary);
   padding: 10px;
   border-radius: 5px;

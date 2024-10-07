@@ -1,27 +1,31 @@
-// AnotherComponent.jsx
-import React from 'react';
+import React from "react";
+import { useParams } from "react-router-dom";
+import AddCamera from "../AddCamera/AddCamera";
+import ListCamera from "../ListCamera/ListCamera";
+import AddUser from "../AddUser/AddUser";
+import ListUser from "../ListUser/ListUser";
+import DefaultOption from "../DefaultOption/DefaultOption";
+import "./MainSettings.css";
 
-import AddCamera from '../AddCamera/AddCamera';
-import ListCamera from '../ListCamera/ListCamera';
-import AddUser from "../AddUser/AddUser"
-import DefaultOption from "../DefaultOption/DefaultOption"
-import "./MainSettings.css"
-
+// Mapa de secciones a componentes
 const componentMap = {
-    'Camaras-Agregar': AddCamera,
-    'Camaras-Listar camaras': ListCamera,
-    'Usuarios-Agregar': AddUser,
-    'Usuarios-Listar usuarios': ""
-}
+  addCamera: AddCamera,
+  listCamera: ListCamera,
+  addUser: AddUser,
+  listUser: ListUser, // Puedes reemplazarlo con el componente correspondiente
+};
 
-function MainSettings({ selectedAction }) {
-    const ComponentToRender = componentMap[selectedAction] || (() => <DefaultOption />)
+function MainSettings() {
+  const { module, option } = useParams(); // Obtener módulo y opción de la URL  
 
-    return (
-        <section className='contentSettings'>
-            <ComponentToRender />
-        </section>
-    );
+  // Obtener el componente correspondiente al option
+  const ActiveComponent = componentMap[option] || DefaultOption;
+
+  return (
+    <section className="contentSettings">
+      <ActiveComponent />
+    </section>
+  );
 }
 
 export default MainSettings;

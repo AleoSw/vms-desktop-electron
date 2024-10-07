@@ -1,46 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, Link } from "react-router-dom"; // Importamos useLocation y Link
 import "./ToolBar.css";
 import logoSena from "/public/images/logoSena.png";
 import MiniMenu from "../MiniMenu/MiniMenu";
-import { fetchWithAuth } from "../../utils/apiUtils"
-
+import { fetchWithAuth } from "../../utils/apiUtils";
 
 const Toolbar = ({ onLogout }) => {
   const [userData, setUserData] = useState({});
-  const path = window.location.pathname;
-
-  /*useEffect(() => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-  
-    const loadUserData = async () => {
-      try {
-        const response = await fetchWithAuth(
-          `http://${process.env.DB_IP}/auth/user`,
-          requestOptions
-        )
-  
-        if (response.ok) {
-          const data = await response.json();
-          setUserData(data.user);
-        } else {
-          console.log("Error:", response.status);
-          
-        }
-      } catch (error) {
-        console.log("Error:", error);
-      }
-    }
-
-    if (path != "/login") {
-      loadUserData();
-    }
-  }, [])*/
-
+  const location = useLocation(); // Hook para obtener la ruta actual
+  const currentPath = location.pathname; // Obtener el path actual
 
   const handleMinimize = () => {
     window.electronAPI.minimize(); // Llama a la función de minimizar
@@ -60,7 +28,6 @@ const Toolbar = ({ onLogout }) => {
     setShowComponent(!showComponent);
   };
 
-
   return (
     <header className="toolbar">
       <section className="brandMenu">
@@ -71,27 +38,27 @@ const Toolbar = ({ onLogout }) => {
             alt="Servicio Nacional de Aprendizaje"
           />
 
-          {path != "/settings" ? (
+          {/* Condicionales basadas en la ruta actual usando currentPath */}
+          {!currentPath.includes("/settings") && (
             <h3 className="titleLogo">VMS CDTI</h3>
-          ) : null}
+          )}
 
-          {path != "/settings" ? (
-            null
-          ) : <a href="/" className="btn">
-            <i className="ri-arrow-left-line"></i>
-          </a>}
-
+          {(currentPath.includes("/settings") || currentPath.includes("/camera")) && (
+            <Link to="/" className="btn">
+              <i className="ri-arrow-left-line"></i>
+            </Link>
+          )}
         </section>
 
-        {path != "/login" ? (
+        {currentPath !== "/login" && (
           <button className="btn" onClick={handleClick}>
             <i className="ri-menu-line"></i>
           </button>
-        ) : null}
+        )}
       </section>
 
-
-      {path === "/login" ? null : (<span className="rolName">{userData.rol_name}</span>)}
+      {/* Mostrar el rol del usuario solo si no estamos en "/login" */}
+      {currentPath !== "/login" && <span className="rolName">{userData.rol_name}</span>}
 
       <section className="windowBtns">
         <button className="btn" onClick={handleMinimize}>

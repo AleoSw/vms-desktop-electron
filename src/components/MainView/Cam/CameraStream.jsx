@@ -1,36 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import "./CameraStream.css";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/ReactToastify.css";
 
 const CameraStream = ({ videoUrl, name }) => {
-  const [error, setError] = useState(false);
-  const [key, setKey] = useState(0); // Para forzar el re-render
+  const navigate = useNavigate();
 
-  const handleError = () => {
-    setError(true);
-  };
-
-  const handleReload = () => {
-    setError(false); // Resetear el estado de error
-    setKey(prevKey => prevKey + 1); // Cambiar la clave para forzar el re-render del componente
-  };
+  console.log(videoUrl, "<--------------------");
+  
 
   return (
-    <div className='cam'>
-      {error ? (
-        <article className='error-cam'>
-          <p>No se pudo conectar con la cámara</p>
-          <p>{name}</p>
-          <button className='btnReloadCam' onClick={handleReload}>Recargar</button>
-        </article>
-      ) : (
-        <>
-          <img key={key} src={videoUrl} onError={handleError} alt="Stream de la cámara" />
-          <div className="reload-cam" onClick={handleReload}>
+    <>
+      <div className="cam">
+          <img
+            src={videoUrl} // Evita caché añadiendo timestamp
+            alt={`Stream de la cámara ${name}`}
+          />
+          <span className="reload-cam">
             <i className="icon ri-restart-line"></i>
-          </div>
-        </>
-      )}
-    </div>
+          </span>
+        </div>
+    </>
   );
 };
 

@@ -35,7 +35,7 @@ function createWindow() {
 app.whenReady().then(() => {
   
   // Iniciar el servidor proxy de Express en un proceso separado
-  const proxyServer = fork(path.join(__dirname, "proxy.js"));
+  const proxyServer = fork(path.join(__dirname, "server/index.js"));
   
   proxyServer.on("error", (err) => {
     console.error("Error starting the proxy server:", err);

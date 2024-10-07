@@ -1,7 +1,8 @@
 import react from "react";
 import LogoSena from "/public/images/logoSena.png";
-import FormLogin from "./FormLogin";
-import Toolbar from "../ToolBar/ToolBar";
+import FormLogin from "../FormLogin/FormLogin";
+import Toolbar from "../../ToolBar/ToolBar";
+import "./Login.css"
 
 function Login({ onLogin }) {
   return (

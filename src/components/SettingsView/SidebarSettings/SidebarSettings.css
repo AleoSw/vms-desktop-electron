@@ -111,13 +111,21 @@
 }
 
 .actions .item {
+    display: flex;
+    align-items: center;
+    justify-content: start;
     width: 100%;
+    transition: var(--transition);
+}
+
+.actions .item a {
+    width: 100%;
+    height: 100%;
     padding: 5px;
     padding-left: 20px;
     font-size: var(--fs-h6);
     font-weight: var(--fw-regular);
-    cursor: pointer;
-    transition: var(--transition);
+    color: var(--text-primary);
 }
 
 .item.on {

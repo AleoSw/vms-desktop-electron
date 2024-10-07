@@ -31,19 +31,39 @@
 }
 
 .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
     width: 100%;
 }
 
-.dropdown-menu > li {
+.dropdown-menu > a {
     width: 100%;
     padding: 5px;
     padding-left: 15px;
     transition: var(--transition);
     font-size: var(--fs-h6);
-    font-weight: var(--fw-medium);
-    cursor: pointer;
+    font-weight: var(--fw-regular);
+    color: var(--text-primary);
 }
 
-.dropdown-menu > li:hover {
+.dropdown-menu > a:hover {
     background: var(--bg-hover);
+}
+
+.sectorAddCam {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.sectorAddCam a {
+    padding: 5px;
+    font-size: var(--fs-h6);
+    font-weight: var(--fw-medium);
+    background: var(--color-primary);
+    border-radius: 5px;
+    color: var(--text-primary);
 }

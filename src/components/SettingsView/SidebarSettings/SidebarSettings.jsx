@@ -1,13 +1,20 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./SidebarSettings.css";
 
-function SidebarSettings({ modules, onActionSelect, selectedAction }) {
+function SidebarSettings({ modules, onActionSelect }) {
   const [toolbarOn, setToolbarOn] = useState("");
   const [arrowRotate, setArrowRotate] = useState("");
 
   const toggleClass = () => {
-    setToolbarOn(prevClass => (prevClass === "" ? "activeSettings" : ""));
-    setArrowRotate(prevClass => (prevClass === "" ? "rotateArrowSettings" : ""));
+    setToolbarOn((prevClass) => (prevClass === "" ? "activeSettings" : ""));
+    setArrowRotate((prevClass) =>
+      prevClass === "" ? "rotateArrowSettings" : ""
+    );
+  };
+
+  const handleActionClick = (moduleValue, optionValue) => {
+    onActionSelect(moduleValue, optionValue); // Notificamos al componente padre de la opción seleccionada
   };
 
   return (
@@ -23,20 +30,22 @@ function SidebarSettings({ modules, onActionSelect, selectedAction }) {
       <section className="menuSettings">
         <section className="menu">
           {modules.map((module) => (
-            <article key={module.name} className="module">
+            <article key={module.value} className="module">
               <header className="headerModule">
                 <h3 className="title">{module.name}</h3>
               </header>
               <ul className="actions">
-                {module.actions.map((action) => {
-                  const actionId = `${module.name}-${action}`;
-
-                  return (
-                    <li key={actionId} className={actionId === selectedAction ? 'item on' : 'item'} onClick={() => onActionSelect(actionId)}>
-                      {action}
-                    </li>
-                  );
-                })}
+                {module.options.map((option) => (
+                  <li key={option.value} className="item">
+                    <Link
+                      to={`/settings/${module.value}/${option.value}`}
+                      className="actionLink"
+                      onClick={() => handleActionClick(module.value, option.value)}
+                    >
+                      {option.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </article>
           ))}

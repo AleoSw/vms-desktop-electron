@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./MainContent.css";
 import CameraStream from "../Cam/CameraStream";
 import { fetchWithAuth } from "../../../utils/apiUtils";
+import { ToastContainer } from "react-toastify";
 
 function MainContent() {
   const [cameraStreams, setCameraStreams] = useState([]);
@@ -29,7 +30,8 @@ function MainContent() {
           const streams = responseData.cameras.map((camera) => ({
             ip: camera.ip,
             name: camera.name,
-            videoUrl: `http://localhost:5002/video/${camera.ip}?user_cam=${camera.user_cam}&password_cam=${camera.password_cam}`,
+            /*videoUrl: `http://localhost:5002/video/${camera.ip}?user_cam=${camera.user_cam}&password_cam=${camera.password_cam}`,*/
+            videoUrl: `http://localhost:5002/axis/camera-stream?ip=${camera.ip}`,
           }));
 
           setCameraStreams(streams);
@@ -43,7 +45,6 @@ function MainContent() {
 
     fetchCameraStreams();
     setTriggerEffect(false); // Reiniciar el trigger después de la solicitud
-
   }, [triggerEffect]); // El efecto se ejecutará cuando se active `triggerEffect`
 
   const handleTrigger = () => {
@@ -51,22 +52,25 @@ function MainContent() {
   };
 
   return (
-    <section className="cameras" id="cameras">
-      <section className="cam-container">
-        {cameraStreams.length > 0 ? (
-          cameraStreams.map((camera) => (
-            <CameraStream key={camera.ip} name={camera.name} videoUrl={camera.videoUrl} />
-          ))
-        ) : (
-          <section className="no-cams">
-            <p>No hay cámaras de video disponibles</p>
-            <button className="btnEffect" onClick={handleTrigger}>
-              Recargar
-            </button>
-          </section>
-        )}
+    <>
+      <section className="cameras" id="cameras">
+        <section className="cam-container">
+          {cameraStreams.length > 0 ? (
+            cameraStreams.map((camera) => (
+              <CameraStream key={camera.ip} name={camera.name} videoUrl={camera.videoUrl} />
+            ))
+          ) : (
+            <section className="no-cams">
+              <p>No hay cámaras de video disponibles</p>
+              <button className="btnEffect" onClick={handleTrigger}>
+                Recargar
+              </button>
+            </section>
+          )}
+        </section>
       </section>
-    </section>
+      <ToastContainer />
+    </>
   );
 }
 

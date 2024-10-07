@@ -2,9 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form"; // Importa useForm de react-hook-form
 import { fetchWithAuth } from "../../../utils/apiUtils.js"; // Importa tu función fetchWithAuth
 import "./AddCamera.css";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddCamera() {
-  const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm();
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [isCameraVerified, setIsCameraVerified] = useState(false); // Estado para verificar la cámara antes de permitir el envío
@@ -53,7 +62,7 @@ function AddCamera() {
           requestOptions
         );
         if (response.ok) {
-          const data = await response.json();          
+          const data = await response.json();
           setSectors(data.sectors);
         } else {
           console.error("Error al cargar los sectores:", response.statusText);
@@ -67,9 +76,6 @@ function AddCamera() {
   }, []);
 
   const onSubmit = async (data) => {
-    console.log(watch());
-    return;
-
     if (!isCameraVerified) {
       console.log("Por favor, verifica la cámara antes de agregarla.");
       return;
@@ -91,14 +97,15 @@ function AddCamera() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Cámara agregada con éxito:", result);
+
+        toast.success(`Cámara: ${result.cameraName} agreagada exitosamente`, {position: 'bottom-right'});
 
         reset(); // Reinicia el formulario después de agregar la cámara
       } else {
-        console.error("Error al agregar la cámara:", response);
+        toast.error("Error al agregar la cámara", {position: 'bottom-right'})
       }
     } catch (error) {
-      console.error("Error en la solicitud:", error.message);
+      toast.error("Error al agregar la cámara", {position: 'bottom-right'})
     }
   };
 
@@ -119,7 +126,9 @@ function AddCamera() {
               type="text"
               name="name"
               placeholder="Ingresa un nombre, Ej. AMBIENTE A211"
-              {...register("name", { required: "El nombre de la cámara es requerido" })} // Registra el campo en react-hook-form
+              {...register("name", {
+                required: "El nombre de la cámara es requerido",
+              })} // Registra el campo en react-hook-form
             />
             {errors.name && <p className="error">{errors.name.message}</p>}
           </div>
@@ -155,9 +164,13 @@ function AddCamera() {
               type="text"
               name="user_cam"
               placeholder="Ingresa el usuario de la cámara"
-              {...register("user_cam", { required: "El usuario de la cámara es requerido" })} // Registra el campo en react-hook-form
+              {...register("user_cam", {
+                required: "El usuario de la cámara es requerido",
+              })} // Registra el campo en react-hook-form
             />
-            {errors.user_cam && <p className="error">{errors.user_cam.message}</p>}
+            {errors.user_cam && (
+              <p className="error">{errors.user_cam.message}</p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="password_cam">
@@ -168,9 +181,13 @@ function AddCamera() {
               type="password" // Cambié a "password" para ocultar la contraseña
               name="password_cam"
               placeholder="Ingresa la contraseña de la cámara"
-              {...register("password_cam", { required: "La cotraseña de la cámara es requerida" })} // Registra el campo en react-hook-form
+              {...register("password_cam", {
+                required: "La cotraseña de la cámara es requerida",
+              })} // Registra el campo en react-hook-form
             />
-            {errors.password_cam && <p className="error">{errors.password_cam.message}</p>}
+            {errors.password_cam && (
+              <p className="error">{errors.password_cam.message}</p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="sector_name">
@@ -211,6 +228,7 @@ function AddCamera() {
           </button>
         </form>
       </section>
+      <ToastContainer />
     </>
   );
 }
