@@ -29,14 +29,31 @@
     padding-left: 15px;
 }
 
+.cameraPTZ {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .player .cam {
     width: 100%;
     max-width: none;
 }
 
 .footer-control {
+    padding-block: 10px;
+    user-select: none;
     display: flex;
     border: var(--border-color) var(--border-size);
+}
+
+.screenshot {
+    padding-inline: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .screenshot button {
@@ -51,10 +68,40 @@
     background: var(--c-hover-primary);
 }
 
-.screenshot button h3 {
+.screenshot h3 {
     font-size: var(--fs-h6);
-    font-weight: var(--fw-semibold);
+    font-weight: var(--fw-medium);
     color: var(--text-primary);
+}
+
+.screenshot i {
+    color: var(--text-primary);
+}
+
+.btnPlayer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: var(--color-primary);
+    border-radius: 5px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btnPlayer i {
+    color: var(--text-primary);
+}
+
+.btnPlayer h3 {
+    font-size: var(--fs-h6);
+    font-weight: var(--fw-medium);
+    color: var(--text-primary);
+}
+
+.btnPlayer:hover {
+    background: var(--c-hover-primary);
 }
 
 @media screen and (min-width: 1440px) {

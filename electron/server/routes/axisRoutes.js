@@ -9,7 +9,8 @@ import {
   isDomeCamera,
   moveCamera,
   stopCamera,
-  getScreenshot
+  getScreenshots,
+  makeScreenshot
 } from "../controllers/axisController.js";
 
 const router = Router();
@@ -31,7 +32,9 @@ router.post("/move-camera", moveCamera);
 
 router.post("/stop-camera", stopCamera);
 
-router.get("/camera-screenshot", getScreenshot)
+router.get("/camera-screenshot", makeScreenshot)
+
+router.get("/screenshots", getScreenshots)
 
 router.get("/cameras", getCameras);
 

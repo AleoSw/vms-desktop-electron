@@ -12,16 +12,16 @@ def continuous_move(direction):
     """Inicia el movimiento continuo en la dirección especificada."""
     if direction == 'left':
         print("Iniciando movimiento continuo hacia la izquierda.")
-        camera.continuous_move(-100, 0, 0)  # Movimiento de pan a la izquierda
+        camera.continuous_move(-30, 0, 0)  # Movimiento de pan a la izquierda
     elif direction == 'right':
         print("Iniciando movimiento continuo hacia la derecha.")
-        camera.continuous_move(100, 0, 0)  # Movimiento de pan a la derecha
+        camera.continuous_move(30, 0, 0)  # Movimiento de pan a la derecha
     elif direction == 'up':
         print("Iniciando movimiento continuo hacia arriba.")
-        camera.continuous_move(0, 100, 0)  # Movimiento de tilt hacia arriba
+        camera.continuous_move(0, 30, 0)  # Movimiento de tilt hacia arriba
     elif direction == 'down':
         print("Iniciando movimiento continuo hacia abajo.")
-        camera.continuous_move(0, -100, 0)  # Movimiento de tilt hacia abajo
+        camera.continuous_move(0, -30, 0)  # Movimiento de tilt hacia abajo
     else:
         print("Dirección no válida. Usa 'left', 'right', 'up' o 'down'.")
 

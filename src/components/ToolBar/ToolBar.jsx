@@ -5,7 +5,9 @@ import logoSena from "/public/images/logoSena.png";
 import MiniMenu from "../MiniMenu/MiniMenu";
 import { fetchWithAuth } from "../../utils/apiUtils";
 
-const Toolbar = ({ onLogout }) => {
+const Toolbar = ({ onLogout, lastLocation = "/" }) => {
+  console.log("Last Location: ", lastLocation);
+
   const [userData, setUserData] = useState({});
   const location = useLocation(); // Hook para obtener la ruta actual
   const currentPath = location.pathname; // Obtener el path actual
@@ -43,11 +45,18 @@ const Toolbar = ({ onLogout }) => {
             <h3 className="titleLogo">VMS CDTI</h3>
           )}
 
-          {(currentPath.includes("/settings") || currentPath.includes("/camera")) && (
+          {(currentPath.includes("/settings") ||
+            currentPath.includes("/camera")) && (
             <Link to="/" className="btn">
               <i className="ri-arrow-left-line"></i>
             </Link>
           )}
+
+          {lastLocation.includes("/camera/") ? (
+            <Link to={lastLocation} className="btn">
+              <i className="ri-arrow-left-line"></i>
+            </Link>
+          ) : null}
         </section>
 
         {currentPath !== "/login" && (
@@ -58,7 +67,9 @@ const Toolbar = ({ onLogout }) => {
       </section>
 
       {/* Mostrar el rol del usuario solo si no estamos en "/login" */}
-      {currentPath !== "/login" && <span className="rolName">{userData.rol_name}</span>}
+      {currentPath !== "/login" && (
+        <span className="rolName">{userData.rol_name}</span>
+      )}
 
       <section className="windowBtns">
         <button className="btn" onClick={handleMinimize}>

@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CameraStream from "../../MainView/Cam/CameraStream";
 import { fetchWithAuth } from "../../../utils/apiUtils";
 import PTZControl from "../PTZControl/PTZControl";
 import "./MainCameraControl.css";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MainCameraControl() {
+  const navigate = useNavigate();
   const { name } = useParams();
   const queryParams = new URLSearchParams(location.search);
   const cameraIp = queryParams.get("ip"); // Obtener el valor de camera_ip
@@ -45,15 +49,23 @@ function MainCameraControl() {
 
     try {
       const response = await axios.get(url);
+
+      if (response) {
+        toast.success('Captura de video guardada exitosamente', {position: "bottom-right"})
+      }
     } catch (error) {
       console.log("Error:", error);
     }
-  }
+  };
 
   useEffect(() => {
     setVideoUrl(`http://localhost:5002/axis/camera-stream?ip=${cameraIp}`);
     isDomeData();
   }, []);
+
+  const handleAllScreenshots = () => {
+    navigate(`/screenshots?name=${name}&ip=${cameraIp}`)
+  }
 
   return (
     <section className="contentCameraControl">
@@ -62,17 +74,26 @@ function MainCameraControl() {
         <h3 className="title">{name}</h3>
       </header>
       <section className="player">
-        <CameraStream ip={cameraIp} name={name} videoUrl={videoUrl} />
+        <section className="cameraPTZ">
+          <CameraStream ip={cameraIp} name={name} videoUrl={videoUrl} />
+          {isDome ? <PTZControl ip={cameraIp} /> : null}
+        </section>
 
         <footer className="footer-control">
-          {isDome ? <PTZControl ip={cameraIp} /> : null}
           <section className="screenshot">
             <button className="" onClick={handleScreenshot}>
-              <h3>Capturar imagen</h3>
+            <i className="icon ri-file-image-line"></i>
             </button>
+            <h3>Capturar imagen</h3>
           </section>
+          <button className="btnPlayer" onClick={handleAllScreenshots}>
+          <i className="icon ri-folder-image-line"></i>
+            <h3>Ver todas las capturas</h3>
+          </button>
         </footer>
       </section>
+
+      <ToastContainer />
     </section>
   );
 }

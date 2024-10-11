@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Settings from "./components/SettingsView/Settings/Settings";
 import MainSettings from "./components/SettingsView/MainSettings/MainSettings";
 import CameraControl from "./components/CameraControlView/CameraControl/CameraControl";
+import Screenshot from "./components/ScreenshotsView/Screenshots/Screenshot";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,6 +47,7 @@ const App = () => {
             <Route path=":module/:option" element={<MainSettings />}/>
           </Route>
           <Route path="/camera/:name" element={<ProtectedRoute element={<CameraControl onLogout={handleLogout} />} />} />
+          <Route path="/screenshots" element={<ProtectedRoute element={<Screenshot onLogout={handleLogout} />} />}/>
         </Routes>
       </div>
     </Router>

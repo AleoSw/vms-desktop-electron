@@ -303,4 +303,35 @@ export class AxisCamera {
       };
     }
   }
+
+  async getScreenshots() {
+    const pathScreenshots = path.join(
+      os.homedir(),
+      "Videos",
+      "vms",
+      "screenshots",
+      this.ip
+    );
+
+    try {
+      const archivos = await fs.readdir(pathScreenshots);
+      const archivosJSON = await Promise.all(
+        archivos.map(async (archivo) => {
+          const rutaCompleta = path.join(pathScreenshots, archivo);
+          const contenidoArchivo = await fs.readFile(rutaCompleta);
+          const base64 = contenidoArchivo.toString("base64"); // Convierte el buffer a base64
+
+          return {
+            nombre: archivo,
+            imagen: `data:image/jpeg;base64,${base64}`, // Asumiendo que las imágenes son JPEG
+          };
+        })
+      );
+
+      return archivosJSON; // Retorna el JSON con los archivos
+    } catch (error) {
+      console.error("Error al leer el directorio:", error);
+      throw error; // Lanza el error para ser manejado por quien llame a esta función
+    }
+  }
 }

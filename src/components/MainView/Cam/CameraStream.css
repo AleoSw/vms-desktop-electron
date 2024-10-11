@@ -1,4 +1,5 @@
 .cam {
+  user-select: none;
   position: relative;
   flex: 1 1 calc(100% - 2px);
   max-width: calc(100% - 2px);

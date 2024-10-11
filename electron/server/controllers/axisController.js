@@ -1,3 +1,4 @@
+import { send } from "vite";
 import { AxisCamera } from "../lib/axis.js";
 
 const cameras = {}; // Almacenar las instancias de las cámaras
@@ -117,7 +118,7 @@ export const getStreams = (req, res) => {
   });
 };
 
-export const moveCamera = async (req, res) => {  
+export const moveCamera = async (req, res) => {
   const { ip, direction } = req.body;
 
   let camera = cameras[ip];
@@ -153,14 +154,19 @@ export const stopCamera = async (req, res) => {
   }
 
   try {
-    const result = await camera.moveCamera(ip, camera.user, camera.password, "stop"); // Envía el comando 'stop'
+    const result = await camera.moveCamera(
+      ip,
+      camera.user,
+      camera.password,
+      "stop"
+    ); // Envía el comando 'stop'
     res.json({ message: `Movimiento detenido`, result });
   } catch (error) {
     res.status(500).json({ error: error.message }); // Error en caso de fallo
   }
 };
 
-export const getScreenshot = async (req, res) => {
+export const makeScreenshot = async (req, res) => {
   const { ip } = req.query; // Obtén la IP de la cámara desde el body de la solicitud
 
   let camera = cameras[ip];
@@ -178,22 +184,43 @@ export const getScreenshot = async (req, res) => {
     if (response.path) {
       // Si la captura fue exitosa, responde con la ruta de la imagen
       res.json({
-        message: 'Captura de pantalla obtenida con éxito.',
+        message: "Captura de pantalla obtenida con éxito.",
         imagePath: response.path,
       });
     } else {
       // Si hubo un error al capturar la imagen
       res.status(500).json({
-        message: 'Error al capturar la captura de pantalla.',
-        error: response.error || 'Error desconocido.',
+        message: "Error al capturar la captura de pantalla.",
+        error: response.error || "Error desconocido.",
       });
     }
   } catch (error) {
     // Maneja errores inesperados
     res.status(500).json({
-      message: 'Error en el servidor al capturar la imagen.',
+      message: "Error en el servidor al capturar la imagen.",
       error: error.message,
     });
   }
 };
 
+export const getScreenshots = async (req, res) => {
+  const { ip } = req.query; // Obtén la IP de la cámara desde el query de la solicitud
+
+  let camera = cameras[ip];
+
+  if (!camera) {
+    return res.status(404).json({
+      message: "Cámara no encontrada.",
+    });
+  }
+
+  try {
+    const screenshots = await camera.getScreenshots(); // Llama a la función para obtener los screenshots
+    return res.status(200).json(screenshots); // Devuelve los screenshots en formato JSON
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error al obtener los screenshots.",
+      error: error.message,
+    });
+  }
+};
