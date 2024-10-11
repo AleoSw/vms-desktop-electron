@@ -39,7 +39,7 @@ const Dropdown = ({ name, options, onSelect }) => {
               {options.map((camera, index) => (
                 <a
                   key={index}
-                  href={`/camera/${camera.camera_name}?user_cam=${camera.user_cam}&password_cam=${camera.password_cam}&ip=${camera.camera_ip}`}
+                  href={`/camera/${camera.camera_name}?ip=${camera.camera_ip}`}
                 >
                   {camera.camera_name}
                 </a>

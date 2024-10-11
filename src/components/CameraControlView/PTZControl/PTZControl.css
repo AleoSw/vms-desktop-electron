@@ -1,0 +1,37 @@
+.PTZ {
+    width: fit-content;
+    padding-inline: 10px;
+}
+
+.ptz-control {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 5px;
+    padding-block: 10px;
+}
+
+.ptz-header {
+    width: 100%;
+    padding-block: 10px;
+    border-bottom: var(--border-color) var(--border-size);
+}
+
+.ptz-header .title {
+    color: var(--text-primary);
+    font-size: var(--fs-h5);
+    font-weight: var(--fw-medium);
+}
+
+.ptz-control .direction-button {
+    padding: 10px;
+    background: var(--color-primary);
+    color: var(--text-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.ptz-control .direction-button:hover {
+    background: var(--c-hover-primary);
+}

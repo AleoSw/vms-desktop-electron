@@ -34,6 +34,29 @@
     max-width: none;
 }
 
+.footer-control {
+    display: flex;
+    border: var(--border-color) var(--border-size);
+}
+
+.screenshot button {
+    padding: 10px;
+    background: var(--color-primary);
+    border-radius: 5px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.screenshot button:hover {
+    background: var(--c-hover-primary);
+}
+
+.screenshot button h3 {
+    font-size: var(--fs-h6);
+    font-weight: var(--fw-semibold);
+    color: var(--text-primary);
+}
+
 @media screen and (min-width: 1440px) {
     .contentCameraControl {
         width: calc(100% - var(--aside-width));

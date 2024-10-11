@@ -30,8 +30,7 @@ function MainContent() {
           const streams = responseData.cameras.map((camera) => ({
             ip: camera.ip,
             name: camera.name,
-            /*videoUrl: `http://localhost:5002/video/${camera.ip}?user_cam=${camera.user_cam}&password_cam=${camera.password_cam}`,*/
-            videoUrl: `http://localhost:5002/axis/camera-stream?ip=${camera.ip}`,
+            videoUrl: `http://localhost:5002/axis/camera-stream?ip=${camera.ip}&user=${camera.user_cam}&password=${camera.password_cam}`,
           }));
 
           setCameraStreams(streams);
@@ -57,7 +56,7 @@ function MainContent() {
         <section className="cam-container">
           {cameraStreams.length > 0 ? (
             cameraStreams.map((camera) => (
-              <CameraStream key={camera.ip} name={camera.name} videoUrl={camera.videoUrl} />
+              <CameraStream key={camera.ip} ip={camera.ip} name={camera.name} videoUrl={camera.videoUrl} />
             ))
           ) : (
             <section className="no-cams">

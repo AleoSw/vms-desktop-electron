@@ -41,10 +41,7 @@ function Sidebar() {
               acc[sector_name].push({camera_name, camera_ip, user_cam, password_cam}); // Añadir cámaras no nulas
             }
             return acc;
-          }, {});
-
-          console.log(grouped, "<------------------");
-          
+          }, {});          
 
           // Convertir a un array de objetos para pasarlo a Dropdown
           const formattedData = Object.keys(grouped).map((sector) => ({

@@ -4,7 +4,12 @@ import {
   getCameraStream,
   disconnectCamera,
   getCameras,
-  getStreams
+  getStreams,
+  recordCamera,
+  isDomeCamera,
+  moveCamera,
+  stopCamera,
+  getScreenshot
 } from "../controllers/axisController.js";
 
 const router = Router();
@@ -18,7 +23,18 @@ router.get("/camera-stream", getCameraStream);
 // Ruta para desconectar el flujo de video de la cámara
 router.get("/disconnect-camera", disconnectCamera);
 
+router.get("/record-camera", recordCamera);
+
+router.get("/dome-camera", isDomeCamera);
+
+router.post("/move-camera", moveCamera);
+
+router.post("/stop-camera", stopCamera);
+
+router.get("/camera-screenshot", getScreenshot)
+
 router.get("/cameras", getCameras);
+
 router.get("/streams", getStreams);
 
 export default router;

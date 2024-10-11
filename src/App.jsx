@@ -20,26 +20,10 @@ const App = () => {
 
   // Verificar autenticación al iniciar el componente
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:5002');
-
-    ws.onopen = () => {
-      console.log('Connected to WebSocket server');
-    };
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setWsMessage(data.message); // Actualiza el estado con el mensaje recibido
-    };
-
     const token = getCookie("authToken"); // Obtener el token de las cookies
     if (token) {
       setIsAuthenticated(true);
     }
-
-    // Limpiar la conexión WebSocket al desmontar el componente
-    return () => {
-      ws.close();
-    };
   }, []);
 
   const handleLogin = () => {
@@ -54,10 +38,7 @@ const App = () => {
 
   return (
     <Router>
-      <div>
-        {/* Mostrar el mensaje del WebSocket */}
-        {wsMessage && <div>WebSocket Message: {wsMessage}</div>}
-        
+      <div>        
         <Routes>
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/" element={<ProtectedRoute element={<MainCameras onLogout={handleLogout} />} />} />

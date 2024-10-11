@@ -4,23 +4,32 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 
-const CameraStream = ({ videoUrl, name }) => {
+const CameraStream = ({ videoUrl, name, ip }) => {
+  const path = window.document.location.pathname;
   const navigate = useNavigate();
 
-  console.log(videoUrl, "<--------------------");
-  
+  const handlePlayer = () => {
+    navigate(`/camera/${name}?ip=${ip}`);
+  };
 
   return (
     <>
       <div className="cam">
-          <img
-            src={videoUrl} // Evita caché añadiendo timestamp
-            alt={`Stream de la cámara ${name}`}
-          />
+        <img
+          src={videoUrl} // Evita caché añadiendo timestamp
+          alt={`Stream de la cámara ${name}`}
+        />
+        <section className="action-cameras">
           <span className="reload-cam">
             <i className="icon ri-restart-line"></i>
           </span>
-        </div>
+          {!path.includes("/camera") ? (
+            <span className="player-cam" onClick={handlePlayer}>
+              <i className="icon ri-fullscreen-line"></i>
+            </span>
+          ) : null}
+        </section>
+      </div>
     </>
   );
 };

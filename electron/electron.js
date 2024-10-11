@@ -1,9 +1,33 @@
 const path = require("path");
 const { app, BrowserWindow, ipcMain, shell } = require("electron");
-const { fork } = require("child_process");
-require('dotenv').config();
+const { spawn, fork } = require("child_process"); // Asegúrate de importar spawn aquí
+require("dotenv").config();
 
 const isDev = process.env.IS_DEV === "true";
+
+function installDependencies() {
+  return new Promise((resolve, reject) => {
+    const pythonScript = path.join(__dirname, "install_dependencies.py");
+
+    const process = spawn("py", [pythonScript]);
+
+    process.stdout.on("data", (data) => {
+      console.log(`STDOUT: ${data}`);
+    });
+
+    process.stderr.on("data", (data) => {
+      console.error(`STDERR: ${data}`);
+    });
+
+    process.on("close", (code) => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(`Proceso de instalación fallido con código: ${code}`);
+      }
+    });
+  });
+}
 
 let mainWindow;
 
@@ -32,24 +56,32 @@ function createWindow() {
   }
 }
 
-app.whenReady().then(() => {
-  
-  // Iniciar el servidor proxy de Express en un proceso separado
-  const proxyServer = fork(path.join(__dirname, "server/index.js"));
-  
-  proxyServer.on("error", (err) => {
-    console.error("Error starting the proxy server:", err);
-  });
-  
-  // Crear la ventana de Electron
-  createWindow();
-  
-  if (!isDev) {
-    const serverReact = fork(path.join(__dirname, "server.js"));
-  
-    serverReact.on("error", (err) => {
-      console.error("Error starting the dist server:", err);
+app.whenReady().then(async () => {
+  try {
+    await installDependencies();
+    console.log("Dependencias instaladas. Iniciando la aplicación...");
+    
+    // Crear la ventana de Electron aquí después de instalar dependencias
+    createWindow();
+
+    // Iniciar el servidor proxy de Express en un proceso separado
+    const proxyServer = fork(path.join(__dirname, "server/index.js"));
+
+    proxyServer.on("error", (err) => {
+      console.error("Error starting the proxy server:", err);
     });
+
+    if (!isDev) {
+      const serverReact = fork(path.join(__dirname, "server.js"));
+
+      serverReact.on("error", (err) => {
+        console.error("Error starting the dist server:", err);
+      });
+    }
+
+  } catch (error) {
+    console.error(`Error al instalar dependencias: ${error}`);
+    app.quit();
   }
 
   app.on("activate", function () {

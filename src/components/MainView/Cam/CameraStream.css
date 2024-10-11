@@ -5,23 +5,41 @@
   border: var(--border-size) var(--border-color);
 }
 
-.cam:hover .reload-cam {
+.cam:hover .action-cameras {
   opacity: 1;
 }
 
-.reload-cam {
+.action-cameras {
   opacity: 0;
   position: absolute;
-  right: 10px;
   bottom: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: var(--transition);
+}
+
+.reload-cam {
   padding: 5px;
   background: var(--color-primary);
   border-radius: 5px;
   cursor: pointer;
-  transition: var(--transition);
 }
 
 .reload-cam:hover {
+  background: var(--c-hover-primary);
+}
+
+.player-cam {
+  padding: 5px;
+  background: var(--color-primary);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.player-cam:hover {
   background: var(--c-hover-primary);
 }
 
