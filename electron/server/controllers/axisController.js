@@ -11,6 +11,14 @@ export const connectCamera = async (req, res) => {
   let camera = cameras[ip];
 
   if (!camera) {
+    console.log(user, password, "<------");
+
+    if (!user || !password) {
+      return res.status(401).json({
+        "message": "Se requieren credenciales para conectar la cámara."
+      })
+    }
+    
     camera = new AxisCamera(ip, user, password);
     cameras[ip] = camera; // Almacenar la instancia
   }
@@ -107,11 +115,15 @@ export const recordCamera = async (req, res) => {
 
 export const getStreams = (req, res) => {
   const activeStreams = Object.keys(cameras).map((ip) => {
-    return {
-      ip,
-      isActive: !!cameras[ip],
-    };
-  });
+    // Verifica si la cámara está conectada antes de agregarla al arreglo
+    if (cameras[ip]?.isConnected) {
+      return {
+        ip,
+        isActive: !!cameras[ip],
+      };
+    }
+    return null; // Devuelve null si no está conectada
+  }).filter(stream => stream !== null); // Filtra los nulls
 
   return res.status(200).json({
     streams: activeStreams,

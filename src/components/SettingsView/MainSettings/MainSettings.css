@@ -7,7 +7,7 @@
     flex-direction: column;
 }
 
-.headerContent{
+.headerContent {
     width: 100%;
     display: flex;
     justify-content: start;
@@ -20,6 +20,92 @@
 .headerContent .title {
     font-size: var(--fs-h6);
     font-weight: var(--fw-medium);
+}
+
+.scroll-settings {
+    position: relative;
+    width: 100%;
+    overflow-y: scroll;
+    margin: auto 0;
+    padding-left: 15px;
+    padding-block: 10px;
+}
+
+.tableContent {
+    width: 100%;
+    max-width: 1024px;
+    height: auto;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.tableContent th, .tableContent td {
+    padding: 5px 10px;
+    text-align: left;
+    font-size: var(--fs-h5);
+    border: var(--border-size) var(--border-color);
+}
+
+.tableContent th {
+    color: var(--color-secondary);
+}
+
+.tableContent td {
+    color: var(--text-primary);
+    font-weight: var(--fw-meidum);
+}
+
+.tableContent .table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead tr {
+    padding: 5px 10px;
+    text-align: left;
+    border-bottom: var(--border-size) var(--border-color);
+    font-size: var(--fs-h5);
+    font-weight: var(--fw-semibold);
+    color: var(--color-secondary);
+}
+
+.lastTd {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btnTable {
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btnTable.edit {
+    background: var(--color-primary);
+    color: var(--text-primary);
+}
+
+.btnTable.edit:hover {
+    background: var(--c-hover-primary);
+}
+
+.btnTable.delete {
+    background: var(--color-danger);
+    color: var(--text-primary);
+}
+
+.btnTable.delete:hover {
+    background: var(--c-hover-danger);
+}
+
+.btnTable i {
+    font-size: 16px;
 }
 
 @media screen and (min-width: 767px) {

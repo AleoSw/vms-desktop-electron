@@ -15,6 +15,8 @@ import MainSettings from "./components/SettingsView/MainSettings/MainSettings";
 import CameraControl from "./components/CameraControlView/CameraControl/CameraControl";
 import Screenshot from "./components/ScreenshotsView/Screenshots/Screenshot";
 
+import { UserProvider } from "./components/userContext/userContext";
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [wsMessage, setWsMessage] = useState('');
@@ -38,19 +40,21 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div>        
-        <Routes>
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/" element={<ProtectedRoute element={<MainCameras onLogout={handleLogout} />} />} />
-          <Route path="/settings" element={<ProtectedRoute element={<Settings onLogout={handleLogout} />} />} >
-            <Route path=":module/:option" element={<MainSettings />}/>
-          </Route>
-          <Route path="/camera/:name" element={<ProtectedRoute element={<CameraControl onLogout={handleLogout} />} />} />
-          <Route path="/screenshots" element={<ProtectedRoute element={<Screenshot onLogout={handleLogout} />} />}/>
-        </Routes>
-      </div>
-    </Router>
+    <UserProvider>
+      <Router>
+        <div>
+          <Routes>
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/" element={<ProtectedRoute element={<MainCameras onLogout={handleLogout} />} />} />
+            <Route path="/settings" element={<ProtectedRoute element={<Settings onLogout={handleLogout} />} />} >
+              <Route path=":module/:option" element={<MainSettings />} />
+            </Route>
+            <Route path="/camera/:name" element={<ProtectedRoute element={<CameraControl onLogout={handleLogout} />} />} />
+            <Route path="/screenshots" element={<ProtectedRoute element={<Screenshot onLogout={handleLogout} />} />} />
+          </Routes>
+        </div>
+      </Router>
+    </UserProvider>
   );
 };
 

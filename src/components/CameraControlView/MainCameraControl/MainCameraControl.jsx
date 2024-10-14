@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CameraStream from "../../MainView/Cam/CameraStream";
-import { fetchWithAuth } from "../../../utils/apiUtils";
 import PTZControl from "../PTZControl/PTZControl";
 import "./MainCameraControl.css";
 import axios from "axios";
@@ -20,22 +19,11 @@ function MainCameraControl() {
   const [isDome, setIsDome] = useState(false);
 
   const isDomeData = async () => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
     try {
-      const response = await fetchWithAuth(
-        `http://localhost:5002/axis/dome-camera?ip=${cameraIp}`,
-        requestOptions
-      );
+      const response = await axios.get(`http://localhost:5002/axis/dome-camera?ip=${cameraIp}`)
 
-      if (response.ok) {
-        const data = await response.json();
-        setIsDome(data.isDome); // Asegúrate de que data.isDome exista
+      if (response.status == 200) {       
+        setIsDome(response.data.isDome); // Asegúrate de que data.isDome exista
       } else {
         console.error("Error en la respuesta del servidor:", response.status);
       }

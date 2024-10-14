@@ -9,7 +9,7 @@ function installDependencies() {
   return new Promise((resolve, reject) => {
     const pythonScript = path.join(__dirname, "install_dependencies.py");
 
-    const process = spawn("py", [pythonScript]);
+    const process = spawn("python3", [pythonScript]);
 
     process.stdout.on("data", (data) => {
       console.log(`STDOUT: ${data}`);

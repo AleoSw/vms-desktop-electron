@@ -44,7 +44,7 @@
   background: var(--c-hover-primary);
 }
 
-.cam > img {
+.cam>img {
   width: 100%;
   height: auto;
   display: block;
@@ -52,21 +52,24 @@
 
 @media (min-width: 600px) {
   .cam {
-    flex: 1 1 calc(50% - 2px); /* Dos cámaras por fila en pantallas medianas */
+    flex: 1 1 calc(50% - 2px);
+    /* Dos cámaras por fila en pantallas medianas */
     max-width: calc(50% - 2px);
   }
 }
 
 @media (min-width: 900px) {
   .cam {
-    flex: 1 1 calc(33.33% - 2px); /* Tres cámaras por fila en pantallas más grandes */
+    flex: 1 1 calc(33.33% - 2px);
+    /* Tres cámaras por fila en pantallas más grandes */
     max-width: calc(33.33% - 2px);
   }
 }
 
 @media (min-width: 1200px) {
   .cam {
-    flex: 1 1 calc(25% - 2px); /* Cuatro cámaras por fila en pantallas muy grandes */
+    flex: 1 1 calc(25% - 2px);
+    /* Cuatro cámaras por fila en pantallas muy grandes */
     max-width: calc(25% - 2px);
   }
 }
@@ -88,6 +91,16 @@
   color: var(--text-primary);
 }
 
+.cam-error-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--bg-hover);
+  padding: 5px;
+  border-radius: 5px;
+}
+
 .btnReloadCam {
   display: flex;
   align-items: center;
@@ -96,13 +109,34 @@
   background: var(--color-primary);
   padding: 10px;
   border-radius: 5px;
-  font-size: var(--fs-h6);
-  font-weight: var(--fw-medium);
-  color: var(--text-primary);
+
   transition: var(--transition);
   cursor: pointer;
 }
 
 .btnReloadCam:hover {
   background: var(--c-hover-primary);
+}
+
+.btnReloadCam h3 {
+  font-size: var(--fs-h5);
+  font-weight: var(--fw-medium);
+  color: var(--text-primary);
+}
+
+.btnReloadCam i {
+  color: var(--text-primary);
+}
+
+.reload-animate {
+  animation: rotate 2s linear infinite; /* 2 segundos de duración, línea recta, infinitamente */
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg); /* Comienza en 0 grados */
+  }
+  to {
+    transform: rotate(360deg); /* Termina en 360 grados (una rotación completa) */
+  }
 }

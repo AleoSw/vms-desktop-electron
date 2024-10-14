@@ -46,6 +46,7 @@
     user-select: none;
     display: flex;
     border: var(--border-color) var(--border-size);
+    border-top: none;
 }
 
 .screenshot {

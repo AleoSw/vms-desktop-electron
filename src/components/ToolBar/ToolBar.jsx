@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom"; // Importamos useLocation y Link
 import "./ToolBar.css";
 import logoSena from "/public/images/logoSena.png";
 import MiniMenu from "../MiniMenu/MiniMenu";
-import { fetchWithAuth } from "../../utils/apiUtils";
+import { UserContext } from "../userContext/userContext";
 
 const Toolbar = ({ onLogout, lastLocation = "/" }) => {
-  console.log("Last Location: ", lastLocation);
+  const { userRole, loading, error } = useContext(UserContext);
 
-  const [userData, setUserData] = useState({});
   const location = useLocation(); // Hook para obtener la ruta actual
   const currentPath = location.pathname; // Obtener el path actual
 
@@ -68,7 +67,7 @@ const Toolbar = ({ onLogout, lastLocation = "/" }) => {
 
       {/* Mostrar el rol del usuario solo si no estamos en "/login" */}
       {currentPath !== "/login" && (
-        <span className="rolName">{userData.rol_name}</span>
+        <span className="rolName">{userRole}</span>
       )}
 
       <section className="windowBtns">

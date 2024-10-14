@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { fetchWithAuth } from "../../../utils/apiUtils";
 import "./AddUser.css";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import axiosInstance from '../../../utils/axiosConfig.js'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css"
 
 function AddUser() {
   const {
@@ -12,29 +15,17 @@ function AddUser() {
   } = useForm();
 
   const onSubmit = (data) => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data)
-    };
-
     const addUser = async () => {
       try {
-        const response = await fetchWithAuth(
-          `http://${process.env.DB_IP}/auth/register`,
-          requestOptions
-        );
+        const response = await axiosInstance.post("/auth/register", data);
 
-        if (response.ok) {
+        if (response) {
+          toast.success("Usuario registrado con exito.", {position: "bottom-right"})
           reset();
-        } else {
-          console.error('Error en la solicitud:', response.status);
         }
       } catch (error) {
+        toast.error("No se posible registrar el usuario.", {position: "bottom-right"})
         console.log("Error:", error);
-
       }
     }
 
@@ -44,23 +35,12 @@ function AddUser() {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
     const loadRoles = async () => {
       try {
-        const response = await fetchWithAuth(
-          `http://${process.env.DB_IP}/s/role/all`,
-          requestOptions
-        );
+        const response = await axiosInstance.get("/s/role/all");
 
-        if (response.ok) {
-          const data = await response.json();
-          setRoles(data.roles);
+        if (response) {
+          setRoles(response.data.roles);
         }
       } catch (error) {
         console.log(error);
@@ -76,7 +56,7 @@ function AddUser() {
         <i className="icon ri-user-line"></i>
         <h3 className="title">Agregar usuario</h3>
       </header>
-      <section className="addUser">
+      <section className="scroll-settings">
         <form className="formAddUser" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <label htmlFor="document">
@@ -121,6 +101,7 @@ function AddUser() {
           <button className="btnAddUser">Agregar</button>
         </form>
       </section>
+      <ToastContainer />
     </>
   );
 }

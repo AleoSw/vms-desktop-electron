@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../../utils/cookieUtils"; // Importar la función para establecer cookies
 import "./FormLogin.css"
+import axiosInstance from "../../../utils/axiosConfig";
 
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
@@ -11,17 +12,10 @@ const Login = ({ onLogin }) => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(`http://${process.env.DB_IP}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await axiosInstance.post("/auth/login", data);
 
-      if (response.ok) {
-        const responseData = await response.json();
-        setCookie("authToken", responseData.token, 1); // Establecer el token en una cookie con 1 día de expiración
+      if (response.status == 200) {
+        setCookie("authToken", response.data.token, 1); // Establecer el token en una cookie con 1 día de expiración
         onLogin(); // Actualizar el estado de autenticación
         navigate("/"); // Redirigir al usuario a la ruta ponSubmitrotegida
       } else {

@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { fetchWithAuth } from "../../../utils/apiUtils";
-import Alert from "../Alert/Alert";
+
 import "./ListCamera.css";
+import axiosInstance from "../../../utils/axiosConfig";
+import Modal from "../../Modal/Modal"
+import Delete from "./modal/Delete";
+import Update from "./modal/Update";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css"
 
 function ListCamera() {
-  const [showAlert, setShowAlert] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   const [selectedCamera, setSelectedCamera] = useState(null);
   const [cameras, setCameras] = useState([]);
 
-  const loadCameras = async () => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    try {
-      const response = await fetchWithAuth(
-        `http://${process.env.DB_IP}/s/camera/all`,
-        requestOptions
-      );
+  const openModal = (content, selectedCamera) => {
+    setSelectedCamera(selectedCamera);
+    setModalContent(content);
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedCamera(null);
+    setModalContent(null);
+  };
 
-      if (response.ok) {
-        const result = await response.json();
-        setCameras(Array.isArray(result.cameras) ? result.cameras : []);
+  const loadCameras = async () => {
+    try {
+      const response = await axiosInstance.get("/s/camera/all");
+
+      if (response) {
+        setCameras(Array.isArray(response.data.cameras) ? response.data.cameras : []);
       }
     } catch (error) {
       console.log("Error al cargar las camaras: ", err.message);
@@ -35,43 +42,17 @@ function ListCamera() {
     loadCameras();
   }, []);
 
-  const handleDeleteCam = (name) => {
-    setSelectedCamera(name);
-    setShowAlert(true);
-  };
-
   const closeAlert = () => {
     setShowAlert(false);
     setSelectedCamera(null);
   };
 
-  const confirmAction = async () => {
-    const requestOptions = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    try {
-      const response = await fetchWithAuth(
-        `http://${process.env.DB_IP}/s/camera/remove/${selectedCamera}`,
-        requestOptions
-      );
-
-      if (response.ok) {
-        console.log("Cámara eliminada con exito.", response.statusText);
-      }
-    } catch (error) {
-      console.log("Error al eliminar la cámara", error.message);
-    } finally {
-      closeAlert();
-      await loadCameras();
-    }
+  const handleEditCam = async (name) => {
+    openModal("edit", name); // Abrir el modal para editar
   };
 
-  const handleEditCam = async (name) => {
-    console.log(name);
+  const handleDeleteCam = async (name) => {
+    openModal("delete", name); // Abrir el modal para eliminar
   };
 
   return (
@@ -80,7 +61,7 @@ function ListCamera() {
         <i className="icon ri-video-on-line"></i>
         <h3 className="title">Cámaras en el sistema</h3>
       </header>
-      <section className="listCameras">
+      <section className="scroll-settings">
         <section className="tableContent">
           <table className="table">
             <thead>
@@ -89,6 +70,7 @@ function ListCamera() {
                 <th>IP</th>
                 <th>Usuario</th>
                 <th>Contraseña</th>
+                <th>Sector</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -100,6 +82,7 @@ function ListCamera() {
                     <td>{camera.ip}</td>
                     <td>{camera.user_cam}</td>
                     <td>{camera.password_cam}</td>
+                    <td>{camera.sector_name}</td>
                     <td>
                       <div className="lastTd">
                         <button
@@ -127,15 +110,27 @@ function ListCamera() {
           </table>
         </section>
       </section>
-      {showAlert && (
-        <Alert
-          message={`¿Deseas eliminar la camara: ${selectedCamera} permanentemente?`}
-          action={"Eliminar"}
-          onCloseAlert={closeAlert}
-          onConfirmAction={confirmAction}
-        />
-      )}
+
+
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        {modalContent === "delete" ? (
+          <Delete
+            cameraName={selectedCamera}
+            closeModal={closeModal}
+            loadCameras={loadCameras}
+          />
+        ) : modalContent === "edit" ? (
+          <Update
+            cameraName={selectedCamera}
+            closeModal={closeModal}
+            loadCameras={loadCameras}
+          />
+        ) : null}
+      </Modal>
+      
+      <ToastContainer />
     </>
+
   );
 }
 

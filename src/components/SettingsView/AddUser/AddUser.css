@@ -1,10 +1,3 @@
-.addUser {
-    width: 100%;
-    overflow-y: scroll;
-    margin: auto 0;
-    padding-left: 15px;
-}
-
 .formAddUser {
     width: 100%;
     max-width: 1024px;

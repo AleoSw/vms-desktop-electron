@@ -1,0 +1,65 @@
+.content-modal {
+    width: 100%;
+    padding-inline: 10px;
+    text-align: center;
+}
+
+.content-modal h3 {
+    font-size: var(--fs-h5);
+    font-weight: var(--fw-medium);
+    color: var(--text-primary);
+}
+
+.modal-form {
+    width: 100%;
+    max-width: 1024px;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btns {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-block: 10px;
+}
+
+.modal-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.modal-btn h3 {
+    font-size: var(--fs-h5);
+    font-weight: var(--fw-semibold);
+    color: var(--text-primary);
+}
+
+.modal-btn.ok {
+    background: var(--color-primary);
+}
+
+.modal-btn.not {
+    background: var(--color-danger);
+}
+
+.modal-btn.ok:hover {
+    background: var(--c-hover-primary);
+}
+
+.modal-btn.not:hover {
+    background: var(--c-hover-danger);
+}

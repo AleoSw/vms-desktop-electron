@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form"; // Importa useForm de react-hook-form
-import { fetchWithAuth } from "../../../utils/apiUtils.js"; // Importa tu función fetchWithAuth
 import "./AddCamera.css";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import axiosInstance from '../../../utils/axiosConfig.js'
 
 function AddCamera() {
   const {
@@ -26,20 +27,15 @@ function AddCamera() {
     setIsCameraVerified(false); // Deshabilitar el submit hasta que la cámara se verifique
 
     try {
-      const res = await fetch(`http://${cameraIP}/mjpg/video.mjpg`, {
-        method: "GET",
-        mode: "no-cors", // Configuración para evitar CORS
-      });
-
+      const res = await axios.get(`http://${cameraIP}/mjpg/video.mjpg`)
       if (res) {
-        // Dado que la respuesta es opaca (por el modo no-cors), no podemos verificar el estado, pero asumimos que si no falla, está disponible
         setStatus("Cámara disponible");
         setIsCameraVerified(true); // Habilitar el submit si se ha verificado la cámara
-      } else {
-        setStatus("Cámara no conectada");
+        toast.success(status, {position: "bottom-right"})
       }
     } catch (error) {
       setStatus("Cámara no conectada");
+      toast.error(status, {position: "bottom-right"})
     }
 
     setLoading(false);
@@ -47,62 +43,32 @@ function AddCamera() {
 
   const [sectors, setSectors] = useState([]);
 
+  const loadSectors = async () => {
+    try {
+      const response = await axiosInstance.get("/s/sector/all");
+      setSectors(response.data.sectors);
+    } catch (error) {
+      console.error("Error en la solicitud de sectores:", error);
+    }
+  };
+
   useEffect(() => {
-    const loadSectors = async () => {
-      try {
-        const requestOptions = {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-
-        const response = await fetchWithAuth(
-          `http://${process.env.DB_IP}/s/sector/all`,
-          requestOptions
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setSectors(data.sectors);
-        } else {
-          console.error("Error al cargar los sectores:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error en la solicitud de sectores:", error);
-      }
-    };
-
     loadSectors();
   }, []);
 
   const onSubmit = async (data) => {
     if (!isCameraVerified) {
-      console.log("Por favor, verifica la cámara antes de agregarla.");
+      toast.error("Por favor, verifica la cámara antes de agregarla.", {position: "bottom-right"})
       return;
     }
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data), // Convertir los datos del formulario a JSON
-    };
-
     try {
-      const response = await fetchWithAuth(
-        `http://${process.env.DB_IP}/s/camera/add`,
-        requestOptions
-      ); // Cambia la URL al endpoint adecuado
-
-      if (response.ok) {
-        const result = await response.json();
-
-        toast.success(`Cámara: ${result.cameraName} agreagada exitosamente`, {position: 'bottom-right'});
-
+      const response = await axiosInstance.post("/s/camera/add", data);      
+    
+      if (response) {        
+        toast.success(`Cámara: ${response.data.cameraName} agreagada exitosamente`, {position: 'bottom-right'});
+        
         reset(); // Reinicia el formulario después de agregar la cámara
-      } else {
-        toast.error("Error al agregar la cámara", {position: 'bottom-right'})
       }
     } catch (error) {
       toast.error("Error al agregar la cámara", {position: 'bottom-right'})
@@ -115,7 +81,7 @@ function AddCamera() {
         <i className="icon ri-video-on-line"></i>
         <h3 className="title">Agregar cámara de video</h3>
       </header>
-      <section className="addCamera">
+      <section className="scroll-settings">
         <form className="formAddCamera" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <label htmlFor="name">

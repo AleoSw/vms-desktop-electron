@@ -1,0 +1,40 @@
+/* Modal.css */
+.modal-overlay {
+  padding-inline: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+}
+
+.modal-content {
+  background: var(--bg);
+  border: var(--border-color) var(--border-size);
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+}
+
+.modal-content .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 10px;
+  padding-bottom: 0;
+}
+
+.modal-header button {
+  background: var(--bg);
+  border: var(--border-color) var(--border-size);
+  border-radius: 5px;
+  color: var(--text-primary);
+  padding: 5px;
+  cursor: pointer;
+}

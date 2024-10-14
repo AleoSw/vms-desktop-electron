@@ -44,13 +44,12 @@ export class AxisCamera {
         //this.record(this.ip, this.user, this.password).catch(console.error);
         return true;
       } else {
+        this.isConnected = false;
         return false;
       }
     } catch (error) {
-      return {
-        message: `Error en la conexión: ${this.ip}`,
-        error: error.message,
-      };
+      this.isConnected = false;
+      return false;
     }
   }
 
@@ -136,7 +135,7 @@ export class AxisCamera {
     const pythonScript = path.join(__dirname, "record_camera.py");
 
     // Crear el proceso para ejecutar el script de Python
-    const process = spawn("py", [pythonScript, ip, user, password]);
+    const process = spawn("python3", [pythonScript, ip, user, password]);
 
     //process.stdout.on("data", (data) => {
     console.log(`STDOUT: ${data}`);
@@ -192,7 +191,7 @@ export class AxisCamera {
       const pythonScript = path.join(__dirname, "isDome.py");
 
       // Crear el proceso para ejecutar el script de Python
-      const process = spawn("py", [
+      const process = spawn("python3", [
         pythonScript,
         this.ip,
         this.user,
@@ -226,7 +225,7 @@ export class AxisCamera {
       const pythonScript = path.join(__dirname, "moveCamera.py");
 
       // Crear el proceso para ejecutar el script de Python
-      const process = spawn("py", [
+      const process = spawn("python3", [
         pythonScript,
         ip,
         user,
