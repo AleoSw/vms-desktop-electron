@@ -42,11 +42,6 @@ function ListCamera() {
     loadCameras();
   }, []);
 
-  const closeAlert = () => {
-    setShowAlert(false);
-    setSelectedCamera(null);
-  };
-
   const handleEditCam = async (name) => {
     openModal("edit", name); // Abrir el modal para editar
   };

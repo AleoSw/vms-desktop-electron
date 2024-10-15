@@ -1,8 +1,9 @@
 import axios from "axios";
 import { getCookie } from "./cookieUtils";
+import env from "../../env";
 
 const axiosInstance = axios.create({
-    baseURL: process.env.DB_IP,
+    baseURL: env.DB_IP,   
 });
 
 axiosInstance.interceptors.request.use(

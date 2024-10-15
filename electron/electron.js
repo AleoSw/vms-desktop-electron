@@ -9,7 +9,7 @@ function installDependencies() {
   return new Promise((resolve, reject) => {
     const pythonScript = path.join(__dirname, "install_dependencies.py");
 
-    const process = spawn("python3", [pythonScript]);
+    const process = spawn("py", [pythonScript]);
 
     process.stdout.on("data", (data) => {
       console.log(`STDOUT: ${data}`);
@@ -72,7 +72,7 @@ app.whenReady().then(async () => {
     });
 
     if (!isDev) {
-      const serverReact = fork(path.join(__dirname, "server.js"));
+      const serverReact = fork(path.join(__dirname, "/server_dist/server.js"));
 
       serverReact.on("error", (err) => {
         console.error("Error starting the dist server:", err);

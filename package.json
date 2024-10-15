@@ -15,7 +15,8 @@
     "electron:builder": "electron-builder",
     "app:build": "npm run build && npm run electron:builder",
     "dist:dev": "npm run build && electron .",
-    "start:proxy": "nodemon electron/proxy.js"
+    "distreact:dev": "npm run build && node electron/server_dist/server.js",
+    "start:proxy": "nodemon electron/server/index.js"
   },
   "dependencies": {
     "axios": "^1.7.7",
@@ -23,6 +24,7 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "digest-fetch": "^2.0.3",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "node-fetch": "^2.7.0",
     "react": "^18.3.1",

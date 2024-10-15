@@ -10,7 +10,8 @@ import {
   moveCamera,
   stopCamera,
   getScreenshots,
-  makeScreenshot
+  makeScreenshot,
+  status
 } from "../controllers/axisController.js";
 
 const router = Router();
@@ -39,5 +40,7 @@ router.get("/screenshots", getScreenshots)
 router.get("/cameras", getCameras);
 
 router.get("/streams", getStreams);
+
+router.get("/status", status);
 
 export default router;

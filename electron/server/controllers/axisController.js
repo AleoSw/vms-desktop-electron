@@ -236,3 +236,35 @@ export const getScreenshots = async (req, res) => {
     });
   }
 };
+
+export const status = async (req, res) => {
+  const { ip } = req.query;
+
+  let camera = cameras[ip];
+
+  try {
+    const response = await fetch(`http://${ip}/axis-cgi/pingtest.cgi?ip=${ip}`);
+
+    if (response.status === 200 || response.status === 401 || response.status == 304) {
+
+      if (camera) {
+        camera.isConnected = true;
+      }
+
+      return res.json({ isConnected: true });
+    } else {
+
+      if (camera) {
+        camera.isConnected = false;        
+      }
+
+      return res.json({ isConnected: false });
+    }
+  } catch (error) {
+    if (camera) {
+      camera.isConnected = false;
+    }
+    // Maneja los errores como una respuesta fallida
+    return res.json({ isConnected: false });
+  }
+};

@@ -41,7 +41,7 @@ export class AxisCamera {
           this.isDome = true;
         }
         // Llamar a `record` para comenzar la grabación automáticamente
-        //this.record(this.ip, this.user, this.password).catch(console.error);
+        this.record(this.ip, this.user, this.password).catch(console.error);
         return true;
       } else {
         this.isConnected = false;
@@ -135,15 +135,15 @@ export class AxisCamera {
     const pythonScript = path.join(__dirname, "record_camera.py");
 
     // Crear el proceso para ejecutar el script de Python
-    const process = spawn("python3", [pythonScript, ip, user, password]);
+    const process = spawn("py", [pythonScript, ip, user, password]);
 
     //process.stdout.on("data", (data) => {
-    console.log(`STDOUT: ${data}`);
+    //console.log(`STDOUT: ${data}`);
     //});
 
-    process.stderr.on("data", (data) => {
-      console.error(`STDERR: ${data}`);
-    });
+    //process.stderr.on("data", (data) => {
+    // console.error(`STDERR: ${data}`);
+    //});
 
     //process.on("close", (code) => {
     //  console.log(`Proceso de grabación finalizado con código: ${code}`);
@@ -191,7 +191,7 @@ export class AxisCamera {
       const pythonScript = path.join(__dirname, "isDome.py");
 
       // Crear el proceso para ejecutar el script de Python
-      const process = spawn("python3", [
+      const process = spawn("py", [
         pythonScript,
         this.ip,
         this.user,
@@ -225,7 +225,7 @@ export class AxisCamera {
       const pythonScript = path.join(__dirname, "moveCamera.py");
 
       // Crear el proceso para ejecutar el script de Python
-      const process = spawn("python3", [
+      const process = spawn("py", [
         pythonScript,
         ip,
         user,
